@@ -13,8 +13,8 @@ You may also see any lint errors in the console.
 ### node_modules 수정
 
 node_modules/daisyui/src/theming/themes.js 파일\
-retro 내부 수정\
+retro 내부 수정
 
 "base-100": "#ece3ca",\
 "base-200": "#e4d8b4",\
-"base-300": "#FFFEF6",\
+"base-300": "#FFFEF6"
