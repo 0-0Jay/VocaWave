@@ -3,9 +3,9 @@ import img2 from '../img/home_img2.jpg';
 
 function Home() {
     return (
-        <div className="bg-base-0">
+        <div className="bg-base-100">
             <div style={{height:'70px'}}></div>
-            <div className="hero bg-base-100">
+            <div className="hero bg-base-300">
                 <div className="hero-content flex-col lg:flex-row-reverse" >
                     <img src={img2} className="max-w-sm rounded-lg shadow-2xl" />
                     <div>
@@ -25,7 +25,7 @@ function Home() {
                         <p className="py-6">
                             매번 새 단어장을 직접 만들지 않아도 됩니다. 다른 사람의 단어장을 공유받아 사용할 수 있습니다.
                         </p>
-                        <button className="btn btn-primary">Get Started</button>
+                        <button className="btn btn-primary">단어장 찾아보기</button>
                     </div>
                 </div>
             </div>

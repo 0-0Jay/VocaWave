@@ -1,6 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+
 function WordListCard({ }) {
+    const navigate = useNavigate();
+
+    const selectWords = () => {
+        navigate("/words");
+    }
+
     return (
-        <a className="btn btn-ghost w-72 h-52 m-0 p-0 rounded-2xl text-left">
+        <a className="btn btn-ghost w-72 h-52 m-0 p-0 rounded-2xl text-left" onClick={selectWords}>
             <div className="card bg-base-100 w-80 h-52 p-0 m-0 shadow-xl rounded-2xl" style={{ border: '2px solid #DFD3B0' }}>
                 <div className="card-body">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5">✕</button>

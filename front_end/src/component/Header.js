@@ -4,7 +4,7 @@ import Logo from '../logo.png';
 function Header() {
     const navigate = useNavigate();
     return (
-        <div className="navbar bg-base-100 fixed" style={{zIndex: '10000'}}>
+        <div className="navbar bg-base-200 fixed" style={{zIndex: '10000'}}>
             <div className="drawe flex-none">
                 <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
@@ -25,8 +25,8 @@ function Header() {
                 <div className="drawer-side" style={{zIndex: '10000'}}>
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                        <li><a onClick={() => {navigate('/mywordlist')}}>나의 단어장</a></li>
-                        <li><a onClick={() => {navigate('/shareboard')}}>단어장 공유</a></li>
+                        <li><a className="text-1xl font-semibold font-mono" onClick={() => {navigate('/mywordlist')}}>나의 단어장</a></li>
+                        <li><a className="text-1xl font-semibold font-mono" onClick={() => {navigate('/shareboard')}}>단어장 공유</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,8 +63,8 @@ function Header() {
                         <details>
                             <summary className="text-1xl font-bold">닉네임</summary>
                             <ul className="bg-base-100 rounded-t-none p-2">
-                                <li><a>내 정보</a></li>
-                                <li><a>로그아웃</a></li>
+                                <li><a className='text-xs font-mono font-semibold'>PROFILE</a></li>
+                                <li><a className='text-xs font-mono font-semibold'>LOGOUT</a></li>
                             </ul>
                         </details>
                     </li>

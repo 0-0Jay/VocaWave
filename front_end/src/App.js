@@ -6,20 +6,24 @@ import Main from './component/Main';
 import Home from './component/Home';
 import ShareBoard from './component/ShareBoard';
 import MyWordList from './component/MyWordList';
+import Words from './component/Words';
+import Devtest from './devtest';
 
 function App() {
-  return (
-    <Router>
-      <Header />
-      <Routes>
+    return (
+      <Router>
+        <Header />
+        <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/mywordlist" element={<MyWordList />} />
-        <Route path="/shareboard" element={<ShareBoard />} />
-      </Routes>
-      <Footer />
-    </Router>
-  );
+          <Route path="/home" element={<Home />} />
+          <Route path="/mywordlist" element={<MyWordList />} />
+          <Route path="/shareboard" element={<ShareBoard />} />
+          <Route path="/Words" element={<Words />} />
+          <Route path="/devtest" element={<Devtest />} />
+        </Routes>
+        <Footer />
+      </Router>
+    );
 }
 
 export default App;
