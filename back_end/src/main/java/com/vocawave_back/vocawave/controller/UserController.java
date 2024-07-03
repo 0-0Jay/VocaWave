@@ -20,8 +20,7 @@ public class UserController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody UserDto userDto) {
-        Map<String, Object> response = new HashMap<>();
-        return response;
+        return userService.login(userDto);
     }
 
     @PostMapping("/signup")
