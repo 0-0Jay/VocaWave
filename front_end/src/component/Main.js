@@ -1,11 +1,54 @@
 import Logo from '../logo.png';
 import SignUpModal from './SignUpModal';
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
 function Main() {
     const navigate = useNavigate();
-    const login = () => {
-        navigate('/home');
+    const [formData, setFormData] = useState({ id: '', pw: '' });
+    const [cookie, setCookie, removeCookie] = useCookies([]);
+
+    useEffect(() => {
+        if (cookie.login && cookie.login.id) {
+            navigate('/home');
+        }
+    }, [cookie.login, navigate])
+
+    useEffect(() => {
+        const preventBackButton = () => {
+            window.history.pushState(null, null, window.location.href);
+            console.log("금지");
+        }
+
+        window.history.pushState(null, null, window.location.href);
+        window.addEventListener('popstate', preventBackButton);
+
+        return () => window.removeEventListener('popstate', preventBackButton);
+    }, []);
+
+    const inputForm = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    const login = async () => {
+        console.log(formData);
+        await axios.post(
+            'http://localhost:8099/user/login',
+            formData
+        ).then(response => {
+            console.log(response);
+            alert("로그인 성공");
+            setCookie("login", response.data, {path: "/", expires: new Date(Date.now() + 3600 * 1000 * 24)});
+            navigate('/home');
+            window.location.reload();
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     return (
@@ -23,18 +66,18 @@ function Main() {
                     </div>
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form className="card-body">
+                    <div className="card-body">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">ID</span>
                             </label>
-                            <input type="text" placeholder="ID" className="input input-bordered" required />
+                            <input type="text" name="id" placeholder="ID" className="input input-bordered" onChange={inputForm} required />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" placeholder="password" className="input input-bordered" required />
+                            <input type="password" name="pw" placeholder="password" className="input input-bordered" onChange={inputForm} required />
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-primary" onClick={login}>Login</button>
@@ -43,7 +86,7 @@ function Main() {
                         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                             <SignUpModal />
                         </dialog>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import Header from './component/Header';
 import Footer from './component/Footer';
 import Main from './component/Main';
@@ -10,20 +11,22 @@ import Words from './component/Words';
 import Devtest from './devtest';
 
 function App() {
-    return (
-      <Router>
-        <Header />
-        <Routes>
+  const [cookie] = useCookies([]);
+
+  return (
+    <Router>
+      {cookie.login && cookie.login.id ? <Header /> : null}
+      <Routes>
         <Route path="/" element={<Main />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/mywordlist" element={<MyWordList />} />
-          <Route path="/shareboard" element={<ShareBoard />} />
-          <Route path="/Words" element={<Words />} />
-          <Route path="/devtest" element={<Devtest />} />
-        </Routes>
-        <Footer />
-      </Router>
-    );
+        <Route path="/home" element={<Home />} />
+        <Route path="/mywordlist" element={<MyWordList />} />
+        <Route path="/shareboard" element={<ShareBoard />} />
+        <Route path="/words" element={<Words />} />
+        <Route path="/devtest" element={<Devtest />} />
+      </Routes>
+      {cookie.login && cookie.login.id ? <Footer /> : null}
+    </Router>
+  );
 }
 
 export default App;
