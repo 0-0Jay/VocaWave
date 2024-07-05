@@ -7,10 +7,10 @@ function AddWord() {
                 <div className="collapse-title text-xl font-medium ml-4">직접 입력</div>
                 <div className="collapse-content">
                     <div className="form-control p-2">
-                        <input type="text" placeholder="단어" className="input input-bordered" required />
+                        <input type="text" placeholder="단어" className="input input-bordered bg-base-300" required />
                     </div>
                     <div className="form-control p-2">
-                        <textarea className="textarea textarea-bordered resize-none" placeholder="뜻 / 정의" required></textarea>
+                        <textarea className="textarea textarea-bordered resize-none bg-base-300 h-32" placeholder="뜻 / 정의" required></textarea>
                     </div>
                     <button className="btn btn-primary w-24">추가하기</button>
                 </div>
