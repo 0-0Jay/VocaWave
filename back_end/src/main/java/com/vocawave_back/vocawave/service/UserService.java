@@ -27,4 +27,37 @@ public class UserService {
         }
         return res;
     }
+
+    public boolean signup(UserDto userDto) {
+        Optional<Users> user = usersRepository.findById(userDto.getId());
+        if (user.isEmpty()) {
+            usersRepository.save(UserDto.toEntity(userDto));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void leave(UserDto userDto) {
+        Optional<Users> user = usersRepository.findById(userDto.getId());
+        if (user.isPresent() && userDto.getPw().equals(user.get().getPw())) {
+            usersRepository.deleteById(userDto.getId());
+        }
+    }
+
+    public boolean changeNick(UserDto userDto) {
+        Optional<Users> user = usersRepository.findById(userDto.getId());
+        Optional<Users> chk = usersRepository.findByNick(userDto.getNick());
+        if (user.isPresent() && chk.isEmpty()) {
+            Users res = new Users(
+                    user.get().getId(),
+                    user.get().getPw(),
+                    userDto.getNick()
+            );
+            usersRepository.save(res);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

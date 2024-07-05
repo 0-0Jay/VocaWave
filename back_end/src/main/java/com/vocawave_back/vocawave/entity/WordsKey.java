@@ -3,13 +3,15 @@ package com.vocawave_back.vocawave.entity;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Embeddable
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class WordsKey {
+@AllArgsConstructor
+public class WordsKey implements Serializable {
     private String word;
     private String code;
 }

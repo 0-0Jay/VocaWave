@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, String> {
 
-//    @Query(value="SELECT * FROM users WHERE id = :id AND pw = :pw",nativeQuery = true)
     public Optional<Users> findByIdAndPw(String id, String pw);
+
+    Optional<Users> findByNick(String nick);
 }

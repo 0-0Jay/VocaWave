@@ -4,6 +4,7 @@ import com.vocawave_back.vocawave.dto.UserDto;
 import com.vocawave_back.vocawave.dto.RequestChangePw;
 import com.vocawave_back.vocawave.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,18 +27,25 @@ public class UserController {
     @PostMapping("/signup")
     public Map<String, Object> signup(@RequestBody UserDto userDto) {
         Map<String, Object> response = new HashMap<>();
+        boolean res = userService.signup(userDto);
+        response.put("status", HttpStatus.OK);
+        response.put("result", res);
         return response;
     }
 
     @PostMapping("/leave")
     public Map<String, Object> leave(@RequestBody UserDto userDto) {
         Map<String, Object> response = new HashMap<>();
+        userService.leave(userDto);
+        response.put("status", HttpStatus.OK);
         return response;
     }
 
     @PostMapping("/changeNick")
     public Map<String, Object> changeNick(@RequestBody UserDto userDto) {
         Map<String, Object> response = new HashMap<>();
+        userService.changeNick(userDto);
+        response.put("status", HttpStatus.OK);
         return response;
     }
 

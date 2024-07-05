@@ -16,5 +16,5 @@ import lombok.Setter;
 public class Words {
     @EmbeddedId
     private WordsKey wordskey;
-    private String cmt;
+    private String mean;
 }
