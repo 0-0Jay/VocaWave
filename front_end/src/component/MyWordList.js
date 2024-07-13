@@ -14,14 +14,14 @@ function MyWordList() {
             await axios.get(
                 'http://localhost:8099/main/wordList/' + cookie.login.id
             ).then(response => {
-                setWordlist(response.data);
+                setWordlist(response.data.wordlist);
                 console.log(response.data)
             }).catch(error => {
                 console.log(error);
             });
         };
         list();
-    },);
+    }, []);
 
     return (
         <div className="bg-base-300 p-10 pt-24">
@@ -79,7 +79,7 @@ function MyWordList() {
             <div className='flex justify-center'>
                 <div className="inline-grid grid-cols-3 gap-4">
                     {wordlist.map(item => (
-                        <WordListCard key={item.code} wtitle={item.wtitle} cnt={item.cnt} cmt={item.cmt} rate={item.rate} />
+                        <WordListCard key={item.code} code={item.code} wtitle={item.wtitle} cnt={item.cnt} cmt={item.cmt} rate={item.rate} />
                     ))}
                 </div>
             </div>

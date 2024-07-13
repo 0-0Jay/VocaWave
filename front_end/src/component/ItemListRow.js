@@ -1,9 +1,9 @@
-function ItemListRow() {
+function ItemListRow({num, word, mean}) {
     return (
         <tr>
-            <th>num</th>
-            <td>english</td>
-            <td>영어</td>
+            <th>{num}</th>
+            <td>{word}</td>
+            <td>{mean}</td>
             <td>
                 <button>
                     <svg

@@ -1,10 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 
-function WordListCard({wtitle, cnt, cmt, rate}) {
+function WordListCard({ code, wtitle, cnt, cmt, rate }) {
     const navigate = useNavigate();
 
     const selectWords = () => {
-        navigate("/words");
+        navigate("/words", {
+            state: {
+                wcode: code,
+                title: wtitle,
+                wcnt: cnt,
+                wcmt: cmt,
+                wrate: rate,
+            }
+        });
     }
 
     return (
@@ -14,11 +22,11 @@ function WordListCard({wtitle, cnt, cmt, rate}) {
                     <h2 className="card-title">{wtitle}</h2>
                     <div className="flex">
                         <div>
-                            <p className="pb-2" style={{ fontSize: '10px', color: 'gray'}}>{cnt}개</p>
+                            <p className="pb-2" style={{ fontSize: '10px', color: 'gray' }}>{cnt}개</p>
                             <p>{cmt}</p>
                         </div>
                         <div style={{ textAlign: 'center', margin: '0px 0px 0px 5px' }}>
-                            <p className="mb-3 p-0" style={{ fontWeight: 'bold'}} >학습률</p>
+                            <p className="mb-3 p-0" style={{ fontWeight: 'bold' }} >학습률</p>
                             <div className="radial-progress" style={{ "--value": rate }} role="progressbar">
                                 <p style={{ fontWeight: 'bold' }}>{rate}%</p>
                             </div>
