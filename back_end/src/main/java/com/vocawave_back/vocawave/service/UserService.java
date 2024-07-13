@@ -1,5 +1,6 @@
 package com.vocawave_back.vocawave.service;
 
+import com.vocawave_back.vocawave.dto.RequestChangePw;
 import com.vocawave_back.vocawave.dto.UserDto;
 import com.vocawave_back.vocawave.entity.Users;
 import com.vocawave_back.vocawave.repository.UsersRepository;
@@ -58,6 +59,14 @@ public class UserService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void changePw(RequestChangePw request) {
+        Optional<Users> user = usersRepository.findById(request.getId());
+        if (user.isPresent() && user.get().getPw().equals(request.getPw())) {
+            Users res = new Users(request.getId(), request.getNewpw(), user.get().getNick());
+            usersRepository.save(res);
         }
     }
 }

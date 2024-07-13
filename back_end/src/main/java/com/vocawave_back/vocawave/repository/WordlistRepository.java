@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface WordlistRepository extends JpaRepository<Wordlist, String> {
@@ -30,4 +31,9 @@ public interface WordlistRepository extends JpaRepository<Wordlist, String> {
             "FROM wordlist w " +
             "WHERE w.id = :id AND w.wtitle LIKE :q", nativeQuery = true)
     List<WordlistInterface> searchWordlist(@Param("id") String id, @Param("q") String query);
+
+    @Query(value="SELECT w.code, w.wtitle, w.cmt, w.id, w.rate " +
+            "FROM wordlist w " +
+            "WHERE w.code = :code AND w.id = :id")
+    Optional<Wordlist> checkOwner(@Param("code") String code, @Param("id") String id);
 }

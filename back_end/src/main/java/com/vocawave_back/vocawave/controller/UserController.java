@@ -52,6 +52,8 @@ public class UserController {
     @PostMapping("/changePw")
     public Map<String, Object> changePw(@RequestBody RequestChangePw request) {
         Map<String, Object> response = new HashMap<>();
+        userService.changePw(request);
+        response.put("status", HttpStatus.OK);
         return response;
     }
 }
