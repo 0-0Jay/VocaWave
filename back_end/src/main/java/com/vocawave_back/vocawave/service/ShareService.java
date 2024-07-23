@@ -33,7 +33,7 @@ public class ShareService {
 
     public List<WordsDto> getShareList(String code) {
         List<WordsDto> res = new ArrayList<>();
-        List<Words> list = wordsRepository.findAllByCode(code);
+        List<Words> list = wordsRepository.getWords(code);
         for (Words w : list) {
             res.add(WordsDto.toDto(w));
         }

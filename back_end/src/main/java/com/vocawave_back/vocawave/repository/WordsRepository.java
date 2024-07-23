@@ -13,6 +13,4 @@ import java.util.List;
 public interface WordsRepository extends JpaRepository<Words, WordsKey> {
     @Query(value="SELECT w.* FROM words w WHERE w.code = :code", nativeQuery = true)
     List<Words> getWords(@Param("code") String code);
-
-    List<Words> findAllByCode(String code);
 }

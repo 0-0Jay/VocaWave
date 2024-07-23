@@ -12,6 +12,6 @@ import java.util.List;
 public interface ShareboardRepository extends JpaRepository<Shareboard, String> {
     @Query(value="SELECT s.code, s.stitle, s.contents " +
             "FROM shareboard s " +
-            "WHERE s.stitle LIKE :query or s.contents LIKE :query")
+            "WHERE s.stitle LIKE :query or s.contents LIKE :query", nativeQuery = true)
     List<Shareboard> searchShare(@Param("query") String query);
 }

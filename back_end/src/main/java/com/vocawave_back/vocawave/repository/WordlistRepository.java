@@ -34,6 +34,6 @@ public interface WordlistRepository extends JpaRepository<Wordlist, String> {
 
     @Query(value="SELECT w.code, w.wtitle, w.cmt, w.id, w.rate " +
             "FROM wordlist w " +
-            "WHERE w.code = :code AND w.id = :id")
+            "WHERE w.code = :code AND w.id = :id", nativeQuery = true)
     Optional<Wordlist> checkOwner(@Param("code") String code, @Param("id") String id);
 }

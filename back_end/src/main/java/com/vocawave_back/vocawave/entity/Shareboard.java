@@ -18,4 +18,5 @@ public class Shareboard {
     private String code;
     private String stitle;
     private String contents;
+    private String nick;
 }
