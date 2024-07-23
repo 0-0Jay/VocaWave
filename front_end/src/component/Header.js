@@ -8,13 +8,6 @@ function Header() {
     const navigate = useNavigate();
     const [cookie, setCookie, removeCookie] = useCookies([]);
 
-    useEffect(() => {
-        if (!cookie.login || !cookie.login.id) {
-            navigate("/");
-            window.location.reload();
-        }
-    }, [cookie.login, navigate])
-
     const logout = () => {
         alert("로그아웃");
         removeCookie("login", { path: '/' });
@@ -23,7 +16,7 @@ function Header() {
     }
 
     return (
-        <div className="navbar bg-base-200 fixed" style={{zIndex: '10000'}}>
+        <div className="navbar bg-base-200 fixed" style={{ zIndex: '10000' }}>
             <div className="drawe flex-none">
                 <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
@@ -41,18 +34,18 @@ function Header() {
                         </svg>
                     </label>
                 </div>
-                <div className="drawer-side" style={{zIndex: '10000'}}>
+                <div className="drawer-side" style={{ zIndex: '10000' }}>
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                        <li><a className="text-1xl font-semibold font-mono" onClick={() => {navigate('/mywordlist')}}>나의 단어장</a></li>
-                        <li><a className="text-1xl font-semibold font-mono" onClick={() => {navigate('/shareboard')}}>단어장 공유</a></li>
+                        <li><a href="/mywordlist" className="text-1xl font-semibold font-mono" onClick={() => { navigate('/mywordlist') }}>나의 단어장</a></li>
+                        <li><a className="text-1xl font-semibold font-mono" onClick={() => { navigate('/shareboard') }}>단어장 공유</a></li>
                     </ul>
                 </div>
             </div>
             <div className="flex-1" onClick={() => { navigate('/home') }}>
                 <a className="btn btn-ghost text-xl">
                     <img src={Logo} style={{ weight: '20px', height: '20px' }} />
-                    <h1 className="text-2xl font-bold" style={{marginLeft: '10px' }}>VocaWave</h1>
+                    <h1 className="text-2xl font-bold" style={{ marginLeft: '10px' }}>VocaWave</h1>
                 </a>
             </div>
             <label className="swap swap-rotate">

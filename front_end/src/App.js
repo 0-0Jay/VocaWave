@@ -15,7 +15,6 @@ function App() {
 
   return (
     <Router>
-      {cookie.login && cookie.login.id ? <Header /> : null}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/home" element={<Home />} />
@@ -24,7 +23,7 @@ function App() {
         <Route path="/words" element={<Words />} />
         <Route path="/devtest" element={<Devtest />} />
       </Routes>
-      {cookie.login && cookie.login.id ? <Footer /> : null}
+      <Footer />
     </Router>
   );
 }

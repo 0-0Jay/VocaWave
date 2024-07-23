@@ -2,8 +2,6 @@ import ItemListRow from "./ItemListRow";
 import { useState, useEffect } from 'react';
 
 function ItemList({ list }) {
-
-
     return (
         <div className="modal-box w-3/5 max-w-5xl">
             <h3 className="font-bold text-lg">단어 리스트 제목</h3>

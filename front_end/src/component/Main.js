@@ -42,10 +42,13 @@ function Main() {
             formData
         ).then(response => {
             console.log(response);
-            alert("로그인 성공");
-            setCookie("login", response.data, {path: "/", expires: new Date(Date.now() + 3600 * 1000 * 24)});
-            navigate('/home');
-            window.location.reload();
+            if (response.data.status === true) {
+                alert("로그인 성공");
+                setCookie("login", response.data, {path: "/", expires: new Date(Date.now() + 3600 * 1000 * 24)});
+                navigate("/home");
+            } else {
+                alert("로그인 실패! ID/PW를 확인해주세요.");
+            }
         }).catch(error => {
             console.log(error);
         })

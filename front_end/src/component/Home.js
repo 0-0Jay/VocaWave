@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import img1 from '../img/home_img1.jpg';
 import img2 from '../img/home_img2.jpg';
+import Header from './Header';
 
 function Home() {
     const [cookie] = useCookies([]);
@@ -10,6 +11,7 @@ function Home() {
 
     return (
         <div className="bg-base-100">
+            <Header />
             <div style={{height:'70px'}}></div>
             <div className="hero bg-base-300">
                 <div className="hero-content flex-col lg:flex-row-reverse" >
