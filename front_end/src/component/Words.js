@@ -80,7 +80,7 @@ function Words() {
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('addword').showModal()}>단어 추가</button><br />
                         <dialog id="addword" className="modal"><AddWord setWordlist={setWordlist} code={wcode} /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('itemlist').showModal()}>단어 리스트</button><br />
-                        <dialog id="itemlist" className="modal"><ItemList list={wordlist} /></dialog>
+                        <dialog id="itemlist" className="modal"><ItemList code={wcode} list={wordlist} /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => { navigate("/mywordlist") }}>목록으로</button>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
-
-
 function SignUpModal() {
+    const signUp = () => {
+        
+    }
     return (
         <div className="modal-box">
             <h3 className="font-bold text-lg">회원 가입</h3>
@@ -24,7 +25,7 @@ function SignUpModal() {
                     <input type="text" placeholder="nickname" className="input input-bordered" required />
                 </div>
                 <div className="form-control mt-6 modal-action">
-                    <button className="btn btn-primary">Sign Up</button>
+                    <button className="btn btn-primary" onClick={signUp}>Sign Up</button>
                 </div>
             </form>
             <div className="modal-action">

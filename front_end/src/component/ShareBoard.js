@@ -8,21 +8,30 @@ function ShareBoard() {
     const [page, setPage] = useState(0);
     const [wordlist, setWordlist] = useState([]);
     const [cookie] = useCookies();
+    const [query, setQuery] = useState('');
+
+    const list = async () => {
+        await axios.get(
+            'http://localhost:8099/share/search?q=' + query
+        ).then(response => {
+            setWordlist(response.data.wordlist);
+            console.log(response.data)
+        }).catch(error => {
+            console.log(error);
+        });
+    };
 
     useEffect(() => {
         console.log(cookie.login.id);
-        const list = async () => {
-            await axios.get(
-                'http://localhost:8099/share/board'
-            ).then(response => {
-                setWordlist(response.data.wordlist);
-                console.log(response.data)
-            }).catch(error => {
-                console.log(error);
-            });
-        };
         list();
     }, []);
+
+    const inputQuery = (e) => {
+        setQuery(e.target.value);
+        console.log(query);
+    }
+
+    const search = () => list();
 
     return (
         <>
@@ -32,8 +41,8 @@ function ShareBoard() {
                     <h1 className="text-2xl font-bold pb-5">단어장 공유</h1>
                     <div className='flex'>
                         <div className="input input-bordered flex items-center gap-2 w-96 bg-white">
-                            <input type="text" className="grow" placeholder="검색어를 입력하세요." />
-                            <button className="btn btn-ghost">
+                            <input type="text" className="grow" placeholder="검색어를 입력하세요." onChange={inputQuery}/>
+                            <button className="btn btn-ghost" onClick={search}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 16 16"

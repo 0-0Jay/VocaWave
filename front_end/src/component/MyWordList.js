@@ -9,21 +9,30 @@ function MyWordList() {
     const [cookie, setCookie] = useCookies(['login']);
     const [wordlist, setWordlist] = useState([]);
     const [page, setPage] = useState(0);
+    const [query, setQuery] = useState('');
+
+    const list = async() => {
+        await axios.get(
+            'http://localhost:8099/main/wordList/' + cookie.login.id + '?q=' + query
+        ).then(response => {
+            setWordlist(response.data.wordlist);
+            console.log(response.data)
+        }).catch(error => {
+            console.log(error);
+        });
+    };
 
     useEffect(() => {
         console.log(cookie.login.id);
-        const list = async () => {
-            await axios.get(
-                'http://localhost:8099/main/wordList/' + cookie.login.id
-            ).then(response => {
-                setWordlist(response.data.wordlist);
-                console.log(response.data)
-            }).catch(error => {
-                console.log(error);
-            });
-        };
         list();
     }, []);
+
+    const inputQuery = (e) => {
+        setQuery(e.target.value);
+        console.log(query);
+    }
+
+    const search = () => list();
 
     return (
         <>
@@ -33,8 +42,8 @@ function MyWordList() {
                     <h1 className="text-2xl font-bold pb-5">나의 단어장</h1>
                     <div className='flex'>
                         <div className="input input-bordered flex items-center gap-2 w-96 bg-white">
-                            <input type="text" className="grow" placeholder="검색어를 입력하세요." />
-                            <button className="btn btn-ghost">
+                            <input type="text" className="grow" placeholder="검색어를 입력하세요." onChange={inputQuery}/>
+                            <button className="btn btn-ghost" onClick={search}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 16 16"

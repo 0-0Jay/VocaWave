@@ -1,10 +1,10 @@
 import ItemListRow from "./ItemListRow";
 import { useState, useEffect } from 'react';
 
-function ItemList({ list }) {
+function ItemList({ code, list }) {
     return (
         <div className="modal-box w-3/5 max-w-5xl">
-            <h3 className="font-bold text-lg">단어 리스트 제목</h3>
+            <h3 className="font-bold text-lg">단어 리스트</h3>
             <div className="overflow-x-auto h-96">
                 <table className="table table-xs table-pin-rows table-pin-cols table-zebra text-center">
                     <thead>
@@ -16,7 +16,7 @@ function ItemList({ list }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((it, index) => (<ItemListRow key={index} num={index} word={it.word} mean={it.mean} />))}
+                        {list.map((it, index) => (<ItemListRow key={index} num={index} code={code} word={it.word} mean={it.mean} />))}
                     </tbody>
                 </table>
             </div>

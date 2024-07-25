@@ -4,15 +4,19 @@ function WordListCard({ code, wtitle, cnt, cmt, rate, nick }) {
     const navigate = useNavigate();
 
     const selectWords = () => {
-        navigate("/words", {
-            state: {
-                wcode: code,
-                title: wtitle,
-                wcnt: cnt,
-                wcmt: cmt,
-                wrate: rate,
-            }
-        });
+        if (rate !== null) {
+            navigate("/words", {
+                state: {
+                    wcode: code,
+                    title: wtitle,
+                    wcnt: cnt,
+                    wcmt: cmt,
+                    wrate: rate,
+                }
+            });
+        } else {
+            
+        }
     }
 
     return (

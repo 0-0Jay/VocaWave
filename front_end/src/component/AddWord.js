@@ -12,7 +12,8 @@ function AddWord({setWordlist, code}) {
                 'http://localhost:8099/main/edit',
                 form
             ).then(response => {
-                console.log(response.data.status)
+                console.log(response.data.status);
+                alert("추가되었습니다!");
             }).catch(error => {
                 console.log(error);
                 alert("이미 존재하는 단어이거나 잘못된 형식입니다.");

@@ -1,11 +1,35 @@
-function ItemListRow({num, word, mean}) {
+import axios from "axios";
+import { useState } from 'react';
+
+function ItemListRow({code, num, word, mean}) {
+    const [form, setForm] = useState({code : code, word : word, mean : mean, type : 1});
+
+    const editWord = async() => {
+        const mean2 = prompt("의미 수정", mean);
+        if (mean2 === null) return;
+        setForm({
+            ...form,
+            ['mean'] : mean2
+        });
+
+        await axios.post(
+            'http://localhost:8099/main/edit',
+            form
+        ).then(response => {
+            console.log(response.data.status);
+            alert("수정되었습니다!");
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
     return (
         <tr>
             <th>{num}</th>
             <td>{word}</td>
             <td>{mean}</td>
             <td>
-                <button>
+                <button onClick={editWord}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
