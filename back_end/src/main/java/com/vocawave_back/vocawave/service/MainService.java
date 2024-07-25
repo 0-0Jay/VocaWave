@@ -26,26 +26,6 @@ public class MainService {
         wordlistRepository.save(wordlist);
     }
 
-    public List<WordlistDto> getWordlist(String id) {
-        List<WordlistInterface> wordlist = wordlistRepository.getWordlist(id);
-        List<WordlistDto> res = new ArrayList<>();
-        for (WordlistInterface w : wordlist) {
-            res.add(
-                    new WordlistDto(
-                            w.getCode(),
-                            w.getWtitle(),
-                            w.getCmt(),
-                            w.getCnt(),
-                            w.getRate()
-                    )
-            );
-        };
-        for (WordlistDto w : res) {
-            System.out.println(w.getWtitle());
-        }
-        return res;
-    };
-
     public void deleteWordlist(String code) {
         System.out.println(code);
         wordlistRepository.deleteById(code);

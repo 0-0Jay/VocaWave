@@ -17,9 +17,8 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/wordList/{id}")
-    public Map<String, Object> getWordlist(@PathVariable("id") String id) {
-        System.out.println(id);
-        List<WordlistDto> res = mainService.getWordlist(id);
+    public Map<String, Object> getWordlist(@PathVariable("id") String id, @RequestParam("q") String query) {
+        List<WordlistDto> res = mainService.search(new RequestSearch(id, query));
         Map<String, Object> response = new HashMap<>();
         response.put("wordlist", res);
         response.put("status", HttpStatus.OK);

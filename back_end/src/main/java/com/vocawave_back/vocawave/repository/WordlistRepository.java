@@ -15,12 +15,6 @@ import java.util.Optional;
 
 @Repository
 public interface WordlistRepository extends JpaRepository<Wordlist, String> {
-    @Query(value="SELECT w.code, w.wtitle, w.cmt, w.rate, " +
-            "(SELECT COUNT(*) FROM words WHERE words.code = w.code) AS cnt " +
-            "FROM wordlist w " +
-            "WHERE w.id = :id", nativeQuery = true)
-    List<WordlistInterface> getWordlist(@Param("id") String id);
-
     @Transactional
     @Modifying
     @Query(value="UPDATE wordlist w SET w.rate = :rate WHERE w.code = :code", nativeQuery = true)
@@ -29,7 +23,7 @@ public interface WordlistRepository extends JpaRepository<Wordlist, String> {
     @Query(value="SELECT w.code, w.wtitle, w.cmt, w.rate, " +
             "(SELECT COUNT(*) FROM words WHERE words.code = w.code) AS cnt " +
             "FROM wordlist w " +
-            "WHERE w.id = :id AND w.wtitle LIKE :q", nativeQuery = true)
+            "WHERE w.id = :id AND (w.wtitle LIKE :q OR w.cmt LIKE :q)", nativeQuery = true)
     List<WordlistInterface> searchWordlist(@Param("id") String id, @Param("q") String query);
 
     @Query(value="SELECT w.code, w.wtitle, w.cmt, w.id, w.rate " +

@@ -18,14 +18,6 @@ public class ShareController {
     private final MainService mainService;
     private final ShareService shareService;
 
-    @GetMapping("/board")
-    public Map<String, Object> getShareboard() {
-        Map<String, Object> response = new HashMap<>();
-        response.put("wordlist", shareService.getShareboard());
-        response.put("status", HttpStatus.OK);
-        return response;
-    }
-
     @GetMapping("/code/{code}")
     public Map<String, Object> getShareList(@PathVariable("code") String code) {
         Map<String, Object> response = new HashMap<>();

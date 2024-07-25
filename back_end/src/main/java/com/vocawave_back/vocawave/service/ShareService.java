@@ -2,6 +2,7 @@ package com.vocawave_back.vocawave.service;
 
 import com.vocawave_back.vocawave.dto.*;
 import com.vocawave_back.vocawave.entity.Shareboard;
+import com.vocawave_back.vocawave.entity.ShareboardInterface;
 import com.vocawave_back.vocawave.entity.Wordlist;
 import com.vocawave_back.vocawave.entity.Words;
 import com.vocawave_back.vocawave.repository.RecommendRepository;
@@ -22,14 +23,6 @@ public class ShareService {
     private final WordlistRepository wordlistRepository;
     private final WordsRepository wordsRepository;
     private final RecommendRepository recommendRepository;
-    public List<ShareboardDto> getShareboard() {
-        List<ShareboardDto> res = new ArrayList<>();
-        List<Shareboard> list = shareboardRepository.findAll();
-        for (Shareboard s : list) {
-            res.add(ShareboardDto.toDto(s));
-        }
-        return res;
-    }
 
     public List<WordsDto> getShareList(String code) {
         List<WordsDto> res = new ArrayList<>();
@@ -41,7 +34,7 @@ public class ShareService {
     }
 
     public boolean updateShare(RequestShare request) {
-        Optional<Wordlist> list = wordlistRepository.checkOwner(request.getCode(), request.getId());
+        Optional<Wordlist> list = wordlistRepository.checkOwner(request.getCode(), request.getNick());
         if (list.isPresent()) {
             shareboardRepository.save(RequestShare.toEntity(request));
             return true;
@@ -55,8 +48,8 @@ public class ShareService {
 
     public List<ShareboardDto> searchShare(String query) {
         List<ShareboardDto> res = new ArrayList<>();
-        List<Shareboard> list = shareboardRepository.searchShare("%" + query + "%");
-        for (Shareboard s : list) {
+        List<ShareboardInterface> list = shareboardRepository.searchShare("%" + query + "%");
+        for (ShareboardInterface s : list) {
             res.add(ShareboardDto.toDto(s));
         }
         return res;
