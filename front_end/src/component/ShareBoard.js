@@ -1,16 +1,14 @@
 import WordListCard from "./WordListCard";
 import Header from './Header';
 import axios from 'axios';
-import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { useState, useEffect, useCallback } from "react";
 
 function ShareBoard() {
     const [page, setPage] = useState(0);
     const [wordlist, setWordlist] = useState([]);
-    const [cookie] = useCookies();
     const [query, setQuery] = useState('');
 
-    const list = async () => {
+    const list = async() => {
         await axios.get(
             'http://localhost:8099/share/search?q=' + query
         ).then(response => {
@@ -22,7 +20,6 @@ function ShareBoard() {
     };
 
     useEffect(() => {
-        console.log(cookie.login.id);
         list();
     }, []);
 

@@ -2,11 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Logo from '../logo.png';
 import { useEffect } from 'react';
+import ProfileModal from './ProfileModal';
 
 
 function Header() {
     const navigate = useNavigate();
-    const [cookie, setCookie, removeCookie] = useCookies([]);
+    const [cookie, , removeCookie] = useCookies([]);
 
     const logout = () => {
         alert("로그아웃");
@@ -75,7 +76,10 @@ function Header() {
                         <details>
                             <summary className="text-1xl font-bold">{cookie.login.nick}</summary>
                             <ul className="bg-base-100 rounded-t-none p-2">
-                                <li><a className='text-xs font-mono font-semibold'>PROFILE</a></li>
+                                <li><a className='text-xs font-mono font-semibold' onClick={() => document.getElementById('my_modal_5').showModal()}>PROFILE</a></li>
+                                <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                                    <ProfileModal />
+                                </dialog>
                                 <li><a className='text-xs font-mono font-semibold' onClick={logout}>LOGOUT</a></li>
                             </ul>
                         </details>
