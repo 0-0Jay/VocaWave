@@ -36,7 +36,8 @@ public class UserController {
     @PostMapping("/leave")
     public Map<String, Object> leave(@RequestBody UserDto userDto) {
         Map<String, Object> response = new HashMap<>();
-        userService.leave(userDto);
+        boolean result = userService.leave(userDto);
+        response.put("result", result);
         response.put("status", HttpStatus.OK);
         return response;
     }
@@ -44,7 +45,7 @@ public class UserController {
     @PostMapping("/changeNick")
     public Map<String, Object> changeNick(@RequestBody UserDto userDto) {
         Map<String, Object> response = new HashMap<>();
-        userService.changeNick(userDto);
+        boolean result = userService.changeNick(userDto);
         response.put("status", HttpStatus.OK);
         return response;
     }
@@ -52,7 +53,8 @@ public class UserController {
     @PostMapping("/changePw")
     public Map<String, Object> changePw(@RequestBody RequestChangePw request) {
         Map<String, Object> response = new HashMap<>();
-        userService.changePw(request);
+        boolean result = userService.changePw(request);
+        response.put("result", result);
         response.put("status", HttpStatus.OK);
         return response;
     }

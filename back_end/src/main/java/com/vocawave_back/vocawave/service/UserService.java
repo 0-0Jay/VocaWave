@@ -39,10 +39,13 @@ public class UserService {
         }
     }
 
-    public void leave(UserDto userDto) {
+    public boolean leave(UserDto userDto) {
         Optional<Users> user = usersRepository.findById(userDto.getId());
         if (user.isPresent() && userDto.getPw().equals(user.get().getPw())) {
             usersRepository.deleteById(userDto.getId());
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -62,11 +65,13 @@ public class UserService {
         }
     }
 
-    public void changePw(RequestChangePw request) {
+    public boolean changePw(RequestChangePw request) {
         Optional<Users> user = usersRepository.findById(request.getId());
         if (user.isPresent() && user.get().getPw().equals(request.getPw())) {
             Users res = new Users(request.getId(), request.getNewpw(), user.get().getNick());
             usersRepository.save(res);
+            return true;
         }
+        return false;
     }
 }
