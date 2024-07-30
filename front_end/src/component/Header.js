@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Logo from '../logo.png';
-import { useEffect } from 'react';
 import ProfileModal from './ProfileModal';
 
 
@@ -38,16 +37,16 @@ function Header() {
                 <div className="drawer-side" style={{ zIndex: '10000' }}>
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                        <li><a href="/mywordlist" className="text-1xl font-semibold font-mono" onClick={() => { navigate('/mywordlist') }}>나의 단어장</a></li>
-                        <li><a className="text-1xl font-semibold font-mono" onClick={() => { navigate('/shareboard') }}>단어장 공유</a></li>
+                        <li><button className="text-1xl font-semibold font-mono" onClick={() => { navigate('/mywordlist') }}>나의 단어장</button></li>
+                        <li><button className="text-1xl font-semibold font-mono" onClick={() => { navigate('/shareboard') }}>단어장 공유</button></li>
                     </ul>
                 </div>
             </div>
             <div className="flex-1" onClick={() => { navigate('/home') }}>
-                <a className="btn btn-ghost text-xl">
-                    <img src={Logo} style={{ weight: '20px', height: '20px' }} />
+                <button className="btn btn-ghost text-xl">
+                    <img src={Logo} style={{ weight: '20px', height: '20px' }} alt=""/>
                     <h1 className="text-2xl font-bold" style={{ marginLeft: '10px' }}>VocaWave</h1>
-                </a>
+                </button>
             </div>
             <label className="swap swap-rotate">
                 {/* this hidden checkbox controls the state */}
@@ -71,16 +70,16 @@ function Header() {
             </label>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a><h1 className="text-1xl font-bold">Welcome!</h1></a></li>
+                    <li><h1 className="text-1xl font-bold">Welcome!</h1></li>
                     <li>
                         <details>
                             <summary className="text-1xl font-bold">{cookie.login.nick}</summary>
                             <ul className="bg-base-100 rounded-t-none p-2">
-                                <li><a className='text-xs font-mono font-semibold' onClick={() => document.getElementById('my_modal_5').showModal()}>PROFILE</a></li>
+                                <li><button className='text-xs font-mono font-semibold' onClick={() => document.getElementById('my_modal_5').showModal()}>PROFILE</button></li>
                                 <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                                     <ProfileModal />
                                 </dialog>
-                                <li><a className='text-xs font-mono font-semibold' onClick={logout}>LOGOUT</a></li>
+                                <li><button className='text-xs font-mono font-semibold' onClick={logout}>LOGOUT</button></li>
                             </ul>
                         </details>
                     </li>

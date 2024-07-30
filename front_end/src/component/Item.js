@@ -1,6 +1,6 @@
 function Item({ word, mean }) {
     return (
-        <div className="diff aspect-[16/9] ">
+        <div className="diff aspect-[16/9]">
             <div className="diff-item-1">
                 <div className="bg-base-100 text-primary-content grid place-content-center text-5xl font-black">
                     {mean}

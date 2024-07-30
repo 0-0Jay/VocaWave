@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function AddWord({setWordlist, code}) {
     const [form, setForm] = useState({code : code, word : '', mean : '', type : 2});
+    const [sharecode, setSharecode] = useState({code : code, sharecode : ''});
     const inputRef = useRef(null);
 
     const addWord = () => {
@@ -14,16 +15,16 @@ function AddWord({setWordlist, code}) {
             ).then(response => {
                 console.log(response.data.status);
                 alert("추가되었습니다!");
+                setWordlist(wl => [
+                    ...wl,
+                    {word: form.word, mean : form.mean}
+                ]);
             }).catch(error => {
                 console.log(error);
                 alert("이미 존재하는 단어이거나 잘못된 형식입니다.");
             });
         }
         request();
-        setWordlist(wl => [
-            ...wl,
-            {word: form.word, mean : form.mean}
-        ]);
         setForm({
             ...form,
             word : '',
@@ -32,7 +33,22 @@ function AddWord({setWordlist, code}) {
         inputRef.current.focus();
     }
 
-    const addShare = (e) => {
+    const addShare = async(e) => {
+        console.log(sharecode);
+        await axios.post(
+            'http://localhost:8099/main/addcode',
+            sharecode
+        ).then(response => {
+            if (response.data.result) {
+                console.log(response.data.status);
+                alert("추가되었습니다!");
+                window.location.reload();
+            } else {
+                alert("코드가 잘못되었거나, 빈 단어장 입니다.");
+            }
+        }).catch(error => {
+            console.log(error);
+        });
 
     }
 
@@ -41,6 +57,13 @@ function AddWord({setWordlist, code}) {
             ...form,
             [e.target.name] : e.target.value
         })
+    }
+
+    const inputCode = (e) => {
+        setSharecode({
+            ...sharecode,
+            sharecode : e.target.value
+        });
     }
 
     return (
@@ -64,7 +87,7 @@ function AddWord({setWordlist, code}) {
                 <div className="collapse-title text-xl font-medium ml-4">코드 입력</div>
                 <div className="collapse-content">
                     <div className="form-control p-2 items-center">
-                        <input type="text" placeholder="공유 코드" className="input input-bordered bg-base-300 m-2 w-64" required />
+                        <input type="text" placeholder="공유 코드" name='sharecode' className="input input-bordered bg-base-300 m-2 w-64" onChange={inputCode} required />
                         <button className="btn btn-primary w-24" onClick={addShare}>추가하기</button>
                     </div>
                 </div>

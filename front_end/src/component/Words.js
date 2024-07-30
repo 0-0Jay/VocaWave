@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Item from './Item';
 import Wordtest from './Wordtest';
-import ItemList from './ItemList';
 import AddWord from './AddWord';
 import Header from './Header';
+import ItemListRow from './ItemListRow';
 
 function Words() {
     const navigate = useNavigate();
@@ -36,13 +36,25 @@ function Words() {
         }
     }
 
+    const updateWord = (index, word) => {
+        const updatedItems = wordlist.map((item, i) => {
+            if (i === index) {
+                return word;
+            }
+            return item;
+        });
+
+        // state 업데이트
+        setWordlist(updatedItems);
+    }
+
     return (
         <>
             <Header />
             <div className='bg-base-300 p-10 pt-24'>
                 <div className="flex place-items-center">
                     {size > 0 ? (
-                        <div className="container flex place-items-center">
+                        <div className="container flex place-items-center" style={{ width: '900px' }}>
                             <button name="left" className="btn btn-circle btn-ghost" onClick={clickButton}>❮</button>
                             <Item word={wordlist[index].word} mean={wordlist[index].mean} />
                             <button name="right" className="btn btn-circle btn-ghost" onClick={clickButton}>❯</button>
@@ -54,14 +66,33 @@ function Words() {
                             <button name="right" className="btn btn-circle btn-ghost">❯</button>
                         </div>
                     )}
-                    <article className='m-10 w-60 h-96 text-balance'>
-                        <p className="font-bold text-2xl">{title}</p>
-                        <p className="text-xs m-1 text-slate-500">{wcnt} 개</p>
-                        <p>{wcmt}</p>
-                    </article>
+                    <div>
+                        <h3 className="font-bold text-lg">단어 리스트</h3>
+                        <div className="overflow-x-auto h-96">
+                            <table className="table table-xs table-pin-rows table-pin-cols table-zebra text-center">
+                                <thead>
+                                    <tr>
+                                        <th className="w-5">No.</th>
+                                        <td className="w-52">Word</td>
+                                        <td className="w-72">Mean</td>
+                                        <td className="w-5">수정</td>
+                                        <td className="w-5">삭제</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {wordlist.map((it, index) => (<ItemListRow key={it.wordcode} wordcode={it.wordcode} num={index} code={wcode} word={it.word} mean={it.mean} updateWord={updateWord} />))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div className="flex place-items-center justify-between">
-                    <div className="items-center text-center m-10">
+                    <div className="items-center text-center m-10" style={{ width: '400px' }}>
+                        <div>
+                            <p className="font-bold text-2xl">{title}</p>
+                            <p className="text-xs m-1 text-slate-500">{wcnt} 개</p>
+                            <p style={{textAlign:'left', overflow: 'hidden', wordWrap: 'break-word', whiteSpace: 'normal' }}>{wcmt}</p>
+                        </div>
                         <p className="font-bold m-3">공유 코드</p>
                         <input type="text" value={wcode} className="input input-bordered text-slate-500 text-center bg-base-300" readOnly />
                         <p className="text-xs m-1 text-slate-500">복사해서 사용하세요</p>
@@ -79,8 +110,6 @@ function Words() {
                         <dialog id="wordtest" className="modal"><Wordtest /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('addword').showModal()}>단어 추가</button><br />
                         <dialog id="addword" className="modal"><AddWord setWordlist={setWordlist} code={wcode} /></dialog>
-                        <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('itemlist').showModal()}>단어 리스트</button><br />
-                        <dialog id="itemlist" className="modal"><ItemList code={wcode} list={wordlist} /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => { navigate("/mywordlist") }}>목록으로</button>
                     </div>
                 </div>
