@@ -1,7 +1,6 @@
 package com.vocawave_back.vocawave.dto;
 
 import com.vocawave_back.vocawave.entity.Words;
-import com.vocawave_back.vocawave.entity.WordsKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class RequestWord {
+    private String wordcode;
     private String word;
     private String code;
     private String mean;
@@ -19,8 +19,10 @@ public class RequestWord {
 
     public static Words toEntity(RequestWord word) {
         return new Words(
-                new WordsKey(word.getWord(), word.getCode()),
-                word.getMean()
+                (word.getWordcode() != null) ? word.getWordcode() : "W" + java.lang.System.currentTimeMillis(),
+                word.getWord(),
+                word.getMean(),
+                word.getCode()
         );
     }
 }

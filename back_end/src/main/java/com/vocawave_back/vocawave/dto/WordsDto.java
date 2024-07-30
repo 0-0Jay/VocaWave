@@ -11,12 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class WordsDto {
+    private String wordcode;
     private String word;
     private String mean;
 
     public static WordsDto toDto(Words words) {
         return new WordsDto(
-                words.getWordskey().getWord(),
+                words.getWordcode(),
+                words.getWord(),
                 words.getMean()
         );
     }

@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -62,11 +59,32 @@ public class MainService {
 
     public void editWord(RequestWord request) {
         int type = request.getType();
-        Words words = RequestWord.toEntity(request);
+        System.out.println(request.getType());
         if (type == 0) {
-            wordsRepository.delete(words);
+            wordsRepository.deleteById(request.getWordcode());
         } else {
+            Words words = RequestWord.toEntity(request);
             wordsRepository.save(words);
+        }
+    }
+
+    public boolean addCode(RequestCode request) {
+        List<Words> share = wordsRepository.getWords(request.getSharecode());
+        if (!share.isEmpty()) {
+            Set<String> mywords = new HashSet<>();
+            List<Words> list = wordsRepository.getWords(request.getCode());
+            for (Words w : list) {
+                mywords.add(w.getWord());
+            }
+            for (Words w : share) {
+                if (!mywords.contains(w.getWord())) {
+                    String wordcode = "W" + java.lang.System.currentTimeMillis();
+                    wordsRepository.save(new Words(wordcode, w.getWord(), w.getMean(), request.getCode()));
+                }
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 }

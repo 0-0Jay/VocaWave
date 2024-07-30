@@ -63,6 +63,15 @@ public class MainController {
         return response;
     }
 
+    @PostMapping("/addcode")
+    public Map<String, Object> addCode(@RequestBody RequestCode request) {
+        Map<String, Object> response = new HashMap<>();
+        boolean result = mainService.addCode(request);
+        response.put("result", result);
+        response.put("status", HttpStatus.OK);
+        return response;
+    }
+
     @PostMapping("/search")
     public Map<String, Object> search(@RequestBody RequestSearch request) {
         Map<String, Object> response = new HashMap<>();

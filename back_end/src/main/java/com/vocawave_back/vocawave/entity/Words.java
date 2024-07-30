@@ -14,7 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Words {
-    @EmbeddedId
-    private WordsKey wordskey;
+    @Id
+    private String wordcode;
+    private String word;
     private String mean;
+    private String code;
 }
