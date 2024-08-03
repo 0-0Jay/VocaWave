@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Item from './Item';
 import Wordtest from './Wordtest';
@@ -9,6 +10,7 @@ import ItemListRow from './ItemListRow';
 
 function Words() {
     const navigate = useNavigate();
+    const [cookie] = useCookies();
     const { wcode, title, wcnt, wcmt, wrate } = useLocation().state || {};
     const [wordlist, setWordlist] = useState([]);
     const [index, setIndex] = useState(0);
@@ -36,16 +38,35 @@ function Words() {
         }
     }
 
-    const updateWord = (index, word) => {
-        const updatedItems = wordlist.map((item, i) => {
-            if (i === index) {
-                return word;
-            }
-            return item;
-        });
+    const deleteList = async () => {
+        if (window.confirm("정말 삭제하시겠습니까?") === true) {
+            await axios.get(
+                'http://localhost:8099/main/delete/' + wcode
+            ).then(response => {
+                console.log(response.data);
+                navigate("/mywordlist");
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    }
 
-        // state 업데이트
-        setWordlist(updatedItems);
+    const shareList = async () => {
+        if (window.confirm("이 단어장을 공유하시겠습니까?") === true) {
+            await axios.post(
+                'http://localhost:8099/share/update',
+                { code: wcode, nick: cookie.login.nick }
+            ).then(response => {
+                console.log(response.data);
+                if (response.data.result === true) {
+                    alert("공유되었습니다!");
+                } else {
+                    alert("이미 공유 중인 단어장입니다.");
+                }
+            }).catch(error => {
+                console.log(error);
+            })
+        }
     }
 
     return (
@@ -80,7 +101,7 @@ function Words() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {wordlist.map((it, index) => (<ItemListRow key={it.wordcode} wordcode={it.wordcode} num={index} code={wcode} word={it.word} mean={it.mean} updateWord={updateWord} />))}
+                                    {wordlist.map((it, index) => (<ItemListRow key={it.wordcode} wordcode={it.wordcode} num={index} code={wcode} word={it.word} mean={it.mean} />))}
                                 </tbody>
                             </table>
                         </div>
@@ -91,7 +112,7 @@ function Words() {
                         <div>
                             <p className="font-bold text-2xl">{title}</p>
                             <p className="text-xs m-1 text-slate-500">{wcnt} 개</p>
-                            <p style={{textAlign:'left', overflow: 'hidden', wordWrap: 'break-word', whiteSpace: 'normal' }}>{wcmt}</p>
+                            <p style={{ textAlign: 'left', overflow: 'hidden', wordWrap: 'break-word', whiteSpace: 'normal' }}>{wcmt}</p>
                         </div>
                         <p className="font-bold m-3">공유 코드</p>
                         <input type="text" value={wcode} className="input input-bordered text-slate-500 text-center bg-base-300" readOnly />
@@ -110,6 +131,8 @@ function Words() {
                         <dialog id="wordtest" className="modal"><Wordtest /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('addword').showModal()}>단어 추가</button><br />
                         <dialog id="addword" className="modal"><AddWord setWordlist={setWordlist} code={wcode} /></dialog>
+                        <button className="btn btn-primary w-64 m-2" onClick={shareList}>단어장 공유</button>
+                        <button className="btn btn-primary w-64 m-2" onClick={deleteList}>단어장 삭제</button>
                         <button className="btn btn-primary w-64 m-2" onClick={() => { navigate("/mywordlist") }}>목록으로</button>
                     </div>
                 </div>

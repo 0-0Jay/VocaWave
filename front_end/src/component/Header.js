@@ -38,7 +38,7 @@ function Header() {
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                         <li><button className="text-1xl font-semibold font-mono" onClick={() => { navigate('/mywordlist') }}>나의 단어장</button></li>
-                        <li><button className="text-1xl font-semibold font-mono" onClick={() => { navigate('/shareboard') }}>단어장 공유</button></li>
+                        <li><button className="text-1xl font-semibold font-mono" onClick={() => { navigate('/shareboard') }}>공유 단어장</button></li>
                     </ul>
                 </div>
             </div>

@@ -1,14 +1,15 @@
 import WordListCard from "./WordListCard";
 import Header from './Header';
 import axios from 'axios';
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import ShareItemList from "./ShareItemList";
 
 function ShareBoard() {
     const [page, setPage] = useState(0);
     const [wordlist, setWordlist] = useState([]);
     const [query, setQuery] = useState('');
 
-    const list = async() => {
+    const list = async () => {
         await axios.get(
             'http://localhost:8099/share/search?q=' + query
         ).then(response => {
@@ -35,10 +36,10 @@ function ShareBoard() {
             <Header />
             <div className="bg-base-300 p-10 pt-24">
                 <div className='card-body items-center text-center'>
-                    <h1 className="text-2xl font-bold pb-5">단어장 공유</h1>
+                    <h1 className="text-2xl font-bold pb-5">공유 단어장</h1>
                     <div className='flex'>
                         <div className="input input-bordered flex items-center gap-2 w-96 bg-white">
-                            <input type="text" className="grow" placeholder="검색어를 입력하세요." onChange={inputQuery}/>
+                            <input type="text" className="grow" placeholder="검색어를 입력하세요." onChange={inputQuery} />
                             <button className="btn btn-ghost" onClick={search}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -52,28 +53,17 @@ function ShareBoard() {
                                 </svg>
                             </button>
                         </div>
-                        <div className="pl-40">
-                            <button className="btn btn-ghost ma">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    className='h-6 w-6 opacity-70'
-                                    id="add-new-file">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M20,18H19V17a1,1,0,0,0-2,0v1H16a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0V20h1a1,1,0,0,0,0-2Zm-7,2H6a1,1,0,0,1-1-1V5A1,1,0,0,1,6,4h5V7a3,3,0,0,0,3,3h3v3a1,1,0,0,0,2,0V9s0,0,0-.06a1.31,1.31,0,0,0-.06-.27l0-.09a1.07,1.07,0,0,0-.19-.28h0l-6-6h0a1.07,1.07,0,0,0-.28-.19.29.29,0,0,0-.1,0A1.1,1.1,0,0,0,12.06,2H6A3,3,0,0,0,3,5V19a3,3,0,0,0,3,3h7a1,1,0,0,0,0-2ZM13,5.41,15.59,8H14a1,1,0,0,1-1-1ZM8,8a1,1,0,0,0,0,2H9A1,1,0,0,0,9,8Zm5,8H8a1,1,0,0,0,0,2h5a1,1,0,0,0,0-2Zm1-4H8a1,1,0,0,0,0,2h6a1,1,0,0,0,0-2Z"
-                                        clipRule="evenodd" />
-                                </svg>
-                                내 단어장 공유
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div className='flex justify-center'>
                     <div className="inline-grid grid-cols-3 gap-4">
                         {wordlist.slice(page * 6, (page + 1) * 6).map(item => (
-                            <WordListCard key={item.code} code={item.code} wtitle={item.stitle} cnt={item.cnt} cmt={item.contents} rate={null} nick={item.nick}/>
+                            <div key={item.code} onClick={() => document.getElementById(item.code).showModal()}>
+                                <WordListCard wtitle={item.stitle} cnt={item.cnt} cmt={item.contents} rate={null} nick={item.nick} />
+                                <dialog id={item.code} className="modal">
+                                    <ShareItemList code={item.code} wtitle={item.stitle} cnt={item.cnt} cmt={item.contents} nick={item.nick}/>
+                                </dialog>
+                            </div>
                         ))}
                     </div>
                 </div>

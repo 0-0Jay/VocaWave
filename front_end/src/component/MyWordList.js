@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import Header from './Header';
+import { useNavigate } from 'react-router-dom';
 
 function MyWordList() {
-    const [cookie, setCookie] = useCookies(['login']);
+    const [cookie] = useCookies(['login']);
     const [wordlist, setWordlist] = useState([]);
     const [page, setPage] = useState(0);
     const [query, setQuery] = useState('');
+    const navigate = useNavigate();
 
     const list = async() => {
         await axios.get(
@@ -57,7 +59,7 @@ function MyWordList() {
                             </button>
                         </div>
                         <div>
-                            <button className="btn btn-ghost ma" onClick={() => document.getElementById('addList').showModal()}>
+                            <button className="btn btn-ghost ml-20" onClick={() => document.getElementById('addList').showModal()}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
@@ -72,32 +74,28 @@ function MyWordList() {
                                 새 단어장 생성
                             </button>
                             <dialog id="addList" className="modal"><AddList /></dialog>
-                            <button className="btn btn-ghost">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    className='h-6 w-6 opacity-70'
-                                    id="trash">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"
-                                        clipRule="evenodd" />
-                                </svg>
-                                단어장 삭제
-                            </button>
                         </div>
                     </div>
                 </div>
                 <div className='flex justify-center'>
                     <div className="inline-grid grid-cols-3 gap-4">
                         {wordlist.slice(page * 6, (page + 1) * 6).map(item => (
-                            <WordListCard key={item.code} code={item.code} wtitle={item.wtitle} cnt={item.cnt} cmt={item.cmt} rate={item.rate}/>
+                            <div onClick={() => {navigate("/words", {
+                                state: {
+                                    wcode: item.code,
+                                    title: item.wtitle,
+                                    wcnt: item.cnt,
+                                    wcmt: item.cmt,
+                                    wrate: item.rate,
+                                }
+                            })}}>
+                                <WordListCard key={item.code} wtitle={item.wtitle} cnt={item.cnt} cmt={item.cmt} rate={item.rate}/>
+                            </div>
                         ))}
                     </div>
                 </div>
                 <div className="flex justify-center pt-5 pb-5">
-                    <button className="btn btn-ghost mr-24" onClick ={() => {setPage(x => x - 1); console.log(page)}} disabled={page == 0}>«</button>
+                    <button className="btn btn-ghost mr-24" onClick ={() => {setPage(x => x - 1); console.log(page)}} disabled={page === 0}>«</button>
                     <button className="btn btn-ghost w-16">{page + 1}</button>
                     <button className="btn btn-ghost ml-24" onClick ={() => {setPage(x => x + 1); console.log(page)}} disabled={(page + 1) * 6 > wordlist.length}>»</button>
                 </div>

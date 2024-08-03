@@ -1,6 +1,6 @@
 import ItemListRow from "./ItemListRow";
 
-function ItemList({ code, list, updateWord }) {
+function ItemList({ code, list }) {
     return (
         <div className="modal-box w-3/5 max-w-5xl">
             <h3 className="font-bold text-lg">단어 리스트</h3>
@@ -16,7 +16,7 @@ function ItemList({ code, list, updateWord }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((it, index) => (<ItemListRow key={it.wordcode} wordcode={it.wordcode} num={index} code={code} word={it.word} mean={it.mean} updateWord={updateWord}/>))}
+                        {list.map((it, index) => (<ItemListRow key={it.wordcode} wordcode={it.wordcode} num={index} code={code} word={it.word} mean={it.mean} />))}
                     </tbody>
                 </table>
             </div>
