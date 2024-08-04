@@ -34,8 +34,9 @@ public class ShareService {
     }
 
     public boolean updateShare(RequestShare request) {
-        Optional<Wordlist> list = wordlistRepository.checkOwner(request.getCode(), request.getNick());
-        if (list.isPresent()) {
+        System.out.println(request.getCode() + "," + request.getNick());
+        List<Shareboard> list = shareboardRepository.checkShare(request.getCode());
+        if (list.isEmpty()) {
             shareboardRepository.save(RequestShare.toEntity(request));
             return true;
         }

@@ -1,9 +1,9 @@
 package com.vocawave_back.vocawave.entity;
 
 public interface ShareboardInterface {
-    String getStitle();
+    String getWtitle();
     String getCode();
     int getCnt();
-    String getContents();
+    String getCmt();
     String getNick();
 }

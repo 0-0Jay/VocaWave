@@ -21,8 +21,8 @@ public class ShareboardDto {
     public static ShareboardDto toDto(ShareboardInterface shareboard) {
         return new ShareboardDto(
                 shareboard.getCode(),
-                shareboard.getStitle(),
-                shareboard.getContents(),
+                shareboard.getWtitle(),
+                shareboard.getCmt(),
                 shareboard.getCnt(),
                 shareboard.getNick()
         );

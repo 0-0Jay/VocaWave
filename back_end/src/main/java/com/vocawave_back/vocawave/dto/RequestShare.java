@@ -12,15 +12,11 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class RequestShare {
     private String code;
-    private String stitle;
-    private String contents;
     private String nick;
 
     public static Shareboard toEntity(RequestShare request) {
         return new Shareboard(
                 request.getCode(),
-                request.getStitle(),
-                request.getContents(),
                 request.getNick()
         );
     }

@@ -16,7 +16,5 @@ import lombok.Setter;
 public class Shareboard {
     @Id
     private String code;
-    private String stitle;
-    private String contents;
     private String nick;
 }
