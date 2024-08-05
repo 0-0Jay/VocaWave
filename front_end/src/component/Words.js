@@ -128,7 +128,7 @@ function Words() {
                     </div>
                     <div className="items-center text-center m-10">
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('wordtest').showModal()}>단어 테스트</button><br />
-                        <dialog id="wordtest" className="modal"><Wordtest /></dialog>
+                        <dialog id="wordtest" className="modal"><Wordtest wordlist={wordlist}/></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('addword').showModal()}>단어 추가</button><br />
                         <dialog id="addword" className="modal"><AddWord setWordlist={setWordlist} code={wcode} /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={shareList}>단어장 공유</button>
