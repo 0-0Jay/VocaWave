@@ -79,8 +79,8 @@ function MyWordList() {
                 </div>
                 <div className='flex justify-center'>
                     <div className="inline-grid grid-cols-3 gap-4">
-                        {wordlist.slice(page * 6, (page + 1) * 6).map(item => (
-                            <div onClick={() => {navigate("/words", {
+                        {wordlist.slice(page * 6, (page + 1) * 6).map((item, index) => (
+                            <div key={index} onClick={() => {navigate("/words", {
                                 state: {
                                     wcode: item.code,
                                     title: item.wtitle,

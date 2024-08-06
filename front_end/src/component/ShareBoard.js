@@ -72,7 +72,7 @@ function ShareBoard() {
                     <button className="btn btn-ghost w-16">{page + 1}</button>
                     <button className="btn btn-ghost ml-24" onClick={() => { setPage(x => x + 1); console.log(page) }} disabled={(page + 1) * 6 > wordlist.length}>»</button>
                 </div>
-                <br />
+                {/* <br />
                 <hr />
                 <div className='card-body items-center text-center'>
                     <h1 className="text-2xl font-bold pb-5">추천 단어장</h1>
@@ -86,7 +86,7 @@ function ShareBoard() {
                         <WordListCard />
                         <WordListCard />
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     )

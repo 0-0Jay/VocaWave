@@ -12,6 +12,7 @@ function Words() {
     const navigate = useNavigate();
     const [cookie] = useCookies();
     const { wcode, title, wcnt, wcmt, wrate } = useLocation().state || {};
+    const [rate, setRate] = useState(wrate);
     const [wordlist, setWordlist] = useState([]);
     const [index, setIndex] = useState(0);
     const size = wordlist.length
@@ -121,14 +122,14 @@ function Words() {
                     <div className="place-items-center m-auto mx-24">
                         <div className="items-center text-center">
                             <p className="font-bold text-2xl m-2">학습률</p>
-                            <div className="radial-progress" style={{ "--value": wrate, "--size": "16rem" }} role="progressbar">
-                                <p className="font-bold">{wrate}%</p>
+                            <div className="radial-progress" style={{ "--value": rate, "--size": "16rem" }} role="progressbar">
+                                <p className="font-bold">{rate}%</p>
                             </div>
                         </div>
                     </div>
                     <div className="items-center text-center m-10">
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('wordtest').showModal()}>단어 테스트</button><br />
-                        <dialog id="wordtest" className="modal"><Wordtest wordlist={wordlist}/></dialog>
+                        <dialog id="wordtest" className="modal bg-base-100" ><Wordtest code={wcode} wordlist={wordlist} setRate={setRate}/></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('addword').showModal()}>단어 추가</button><br />
                         <dialog id="addword" className="modal"><AddWord setWordlist={setWordlist} code={wcode} /></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={shareList}>단어장 공유</button>
