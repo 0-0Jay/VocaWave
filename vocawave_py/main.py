@@ -3,9 +3,8 @@ from Service import *
 from http import HTTPStatus
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-import json
 
-#127.0.0.1:8000/main/recommend
+#127.0.0.1:8000/main/
 app = FastAPI()
 origins = ["*"]
 # CORS 설정 추가
@@ -18,12 +17,19 @@ app.add_middleware(
 )
 
 @app.post('/main/test')
-async def recommend(request: Request) -> dict:
+async def test(request: Request) -> dict:
     body = await request.json()
+    print(body)
     result = {}
     result["status"] = HTTPStatus.OK
-    result["score"] = getScore(body)
+    result["score"], result["rate"] = getScore(body['list'], body['code'])
     return result
+
+# @app.get('/main/recommend/{id}')
+# async def recommend(id : str) -> dict:
+#     result = {}
+#     result["status"] = HTTPStatus.OK
+#     result["list"] = getRecommend()
 
 # 실행방법
 # 1. cmd를 켜고 main.py가 있는 폴더로 cd를 통해 이동
@@ -31,5 +37,5 @@ async def recommend(request: Request) -> dict:
 # 2-1. --reload 옵션은 실시간 반영 느낌이라 ctrl + C로 프로그램 종료가 안됨. 안쓰는거 추천
 
 # 테스트용 코드
-if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == '__main__':
+#     uvicorn.run(app, host="127.0.0.1", port=8000)
