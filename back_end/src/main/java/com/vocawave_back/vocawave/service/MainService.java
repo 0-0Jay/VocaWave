@@ -65,6 +65,7 @@ public class MainService {
         } else {
             Words words = RequestWord.toEntity(request);
             wordsRepository.save(words);
+            wordsRepository.updateScore(request.getCode());
         }
     }
 
@@ -82,6 +83,7 @@ public class MainService {
                     wordsRepository.save(new Words(wordcode, w.getWord(), w.getMean(), request.getCode()));
                 }
             }
+            wordsRepository.updateScore(request.getCode());
             return true;
         } else {
             return false;
