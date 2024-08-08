@@ -25,12 +25,6 @@ async def test(request: Request) -> dict:
     result["score"], result["rate"] = getScore(body['list'], body['code'])
     return result
 
-# @app.get('/main/recommend/{id}')
-# async def recommend(id : str) -> dict:
-#     result = {}
-#     result["status"] = HTTPStatus.OK
-#     result["list"] = getRecommend()
-
 # 실행방법
 # 1. cmd를 켜고 main.py가 있는 폴더로 cd를 통해 이동
 # 2. uvicorn main:app --reload 명령어 실행
