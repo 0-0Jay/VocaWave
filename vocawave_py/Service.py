@@ -1,7 +1,4 @@
 from Repository import *
-from sklearn.feature_extraction.text import TfidfVectorizer
-from scipy.spatial.distance import euclidean
-import re
 
 def getScore(submit : dict, code : str) -> dict:
     score = []
