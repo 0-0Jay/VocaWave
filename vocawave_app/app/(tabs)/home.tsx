@@ -1,25 +1,75 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button, ScrollView } from 'react-native';
 import Header from '../comp/header';
+import Footer from '../comp/footer';
 
-export default function Home() {
+export default function Home({ navigation }: { navigation: any }) {
+
   return (
-    <View style={{flex : 1}}>
-      <Header />
-      <View style={styles.container}>
-        <Text>나의 단어장</Text>
+    <View style={{ flex: 1 }}>
+      <Header navigation={navigation} />
+      <View style={{ height: 70 }} />
+      <View style={styles.homeTop}>
+        <TouchableOpacity style={styles.button} onPress={() => { }}>
+          <Text style={styles.buttonText}>
+            단어장 추가
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => { }}>
+          <Text style={styles.buttonText}>
+            단어장 삭제
+          </Text>
+        </TouchableOpacity>
       </View>
+      <View style={styles.container}>
+        <ScrollView>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+          <Text style={{ flex: 1 }}>나의 단어장</Text>
+          <Text>테스트 텍스트</Text>
+        </ScrollView>
+      </View>
+      <View style={{ height: 70 }} />
+      <Footer navigation={navigation} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#ece3ca',
+    backgroundColor: '#fffffa',
   },
   title: {
     color: '#515233',
@@ -39,13 +89,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ef9995',
     padding: 10,
     borderRadius: 7,
-    margin: 5,
-    width: 300,
+    margin: 10,
+    width: '45%',
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 20
+    fontSize: 15
   },
   modalBackground: {
     flex: 1,
@@ -60,5 +110,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ece3ca'
+  },
+  homeTop: {
+    flexDirection: 'row',
+    backgroundColor: '#fffffa'
   },
 });

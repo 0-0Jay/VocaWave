@@ -1,29 +1,18 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import MyWordList from './(tabs)/home';
-import ShareWordList from './(tabs)/share';
+import Home from './(tabs)/home';
+import Share from './(tabs)/share';
 import Main from './(tabs)/main';
-import Header from './comp/header';
-
+import Wordlist from './(tabs)/wordlist';
 
 const Stack = createNativeStackNavigator();
-const DrawerNav = createDrawerNavigator();
-
-function Drawer() {
-  return (
-    <DrawerNav.Navigator initialRouteName="MyWordList">
-      <DrawerNav.Screen name="MyWordList" component={MyWordList} />
-      <DrawerNav.Screen name="ShareWordList" component={ShareWordList} />
-    </DrawerNav.Navigator>
-  )
-}
 
 export default function Index() {
   return (
-    <Stack.Navigator initialRouteName="main">
+    <Stack.Navigator initialRouteName="Main" >
       <Stack.Screen name="Main" component={Main} />
-      <Stack.Screen name="Drawer" component={Drawer} 
-      options={{ headerShown: false }} />
+      <Stack.Screen name="Home" component={Home} options={{animation : 'none'}} />
+      <Stack.Screen name="Share" component={Share} options={{animation : 'none'}} />
+      <Stack.Screen name="Wordlist" component={Wordlist} options={{animation : 'none'}} />
     </Stack.Navigator>
   );
 }

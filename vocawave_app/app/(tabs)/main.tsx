@@ -7,7 +7,7 @@ export default function Main({ navigation } : {navigation: any}) {
 
   const login = () => {
     alert("로그인!");
-    navigation.navigate('MyWordList')
+    navigation.navigate('Home')
   }
 
   return (

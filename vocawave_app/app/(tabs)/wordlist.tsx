@@ -3,7 +3,7 @@ import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Scro
 import Footer from '../comp/footer';
 import Header from '../comp/header';
 
-export default function Share({ navigation }: { navigation: any }) {
+export default function Wordlist({ navigation }: { navigation: any }) {
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
