@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
-import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
+import axios from 'axios';
 
 export default function Main({ navigation } : {navigation: any}) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [loginForm, setLoginForm] = useState({id : '', pw : '', nick: ''});
 
-  const login = () => {
+  const inputForm = (name: string, value: string) => {
+    setLoginForm(inputForm => ({
+      ...inputForm,
+      [name]: value,
+    }));
+    console.log(loginForm);
+  }
+
+  const login = async() => {
     alert("로그인!");
-    navigation.navigate('Home')
+    await axios.post(
+      'http://localhost:8099/user/login',
+      loginForm
+    ).then(response => {
+      console.log(response.data);
+      navigation.navigate('Home');
+    }).catch(error => {
+      console.log(error);
+    })
   }
 
   return (
@@ -16,8 +33,8 @@ export default function Main({ navigation } : {navigation: any}) {
         source={require('C:/Users/PC/Desktop/project/vocawave-app/assets/images/logo2.png')}
       />
       <Text style={styles.title}>VocaWave</Text>
-      <TextInput style={styles.input} placeholder="ID" />
-      <TextInput style={styles.input} placeholder="PASSWORD" />
+      <TextInput style={styles.input} placeholder="ID" onChangeText={text => {inputForm('id', text)}} />
+      <TextInput style={styles.input} placeholder="PASSWORD" onChangeText={text => {inputForm('pw', text)}} />
       <TouchableOpacity style={styles.button} onPress={login}>
         <Text style={styles.buttonText}>
           로그인
@@ -32,9 +49,9 @@ export default function Main({ navigation } : {navigation: any}) {
         <View style={styles.modalBackground}>
           <View style={styles.modalContents}>
             <Text style={styles.title}>회원가입</Text>
-            <TextInput style={styles.input} placeholder="ID" />
-            <TextInput style={styles.input} placeholder="PASSWORD" />
-            <TextInput style={styles.input} placeholder="NICKNAME" />
+            <TextInput style={styles.input} id='id' placeholder="ID" onChangeText={text => {inputForm('id', text)}} />
+            <TextInput style={styles.input} id='pw' placeholder="PASSWORD" onChangeText={text => {inputForm('pw', text)}} />
+            <TextInput style={styles.input} id='nick' placeholder="NICKNAME" onChangeText={text => {inputForm('nick', text)}} />
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>
                 회원가입
