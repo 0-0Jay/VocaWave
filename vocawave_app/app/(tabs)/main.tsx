@@ -15,13 +15,17 @@ export default function Main({ navigation } : {navigation: any}) {
   }
 
   const login = async() => {
-    alert("로그인!");
     await axios.post(
-      'http://localhost:8099/user/login',
+      'http://192.168.35.3:8099/user/login',
       loginForm
     ).then(response => {
       console.log(response.data);
-      navigation.navigate('Home');
+      if (response.data.status === false) {
+        alert("ID/PW를 확인해주세요!");
+      } else {
+        alert("로그인 성공!");
+        navigation.navigate('Home');
+      }
     }).catch(error => {
       console.log(error);
     })

@@ -1,47 +1,18 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import Footer from '../comp/footer';
 import Header from '../comp/header';
 
 export default function Wordlist({ navigation }: { navigation: any }) {
+
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
       <View style={{ height: 70 }} />
       <View style={styles.container}>
         <ScrollView>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
+          
         </ScrollView>
       </View>
       <View style={{ height: 70 }} />

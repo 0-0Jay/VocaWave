@@ -1,60 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import Footer from '../comp/footer';
+import MyListItem from '../comp/MyListItem';
 
 export default function Home({ navigation }: { navigation: any }) {
+  const [myList, setMyList] = useState([]);
+  const [query, setQuery] = useState('');
+
+  const list = async () => {
+    await axios.get(
+      'http://192.168.35.3:8099/main/wordList/' + '123' + '?q=' + query
+    ).then(response => {
+      setMyList(response.data.wordlist);
+      console.log(response.data.wordlist);
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    list();
+  }, []);
+
+  const inputQuery = (value: string) => {
+    setQuery(value);
+    console.log(query);
+  }
 
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
       <View style={{ height: 70 }} />
       <View style={styles.homeTop}>
-        <TouchableOpacity style={styles.button} onPress={() => { }}>
+        <TextInput style={styles.tinput} onChangeText={text => { inputQuery(text) }} />
+        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
           <Text style={styles.buttonText}>
-            단어장 추가
+            검색
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => { }}>
+        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
           <Text style={styles.buttonText}>
-            단어장 삭제
+            추가
           </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
         <ScrollView>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
+          {myList.map((item, index) => (
+            <MyListItem item={item} navigation={navigation} />
+          ))}
         </ScrollView>
       </View>
       <View style={{ height: 70 }} />
@@ -91,6 +87,23 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     margin: 10,
     width: '45%',
+    alignItems: 'center',
+  },
+  tinput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 8,
+    width: '70%',
+    borderRadius: 5,
+  },
+  tbutton: {
+    backgroundColor: '#ef9995',
+    padding: 10,
+    borderRadius: 7,
+    margin: 5,
+    width: '10%',
+    height: 40,
     alignItems: 'center',
   },
   buttonText: {
