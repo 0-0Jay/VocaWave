@@ -3,7 +3,7 @@ import axios from 'axios';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import Footer from '../comp/footer';
-import MyListItem from '../comp/MyListItem';
+import MyListItem from '../comp/mylistitem';
 
 export default function Home({ navigation }: { navigation: any }) {
   const [myList, setMyList] = useState([]);
@@ -49,7 +49,7 @@ export default function Home({ navigation }: { navigation: any }) {
       <View style={styles.container}>
         <ScrollView>
           {myList.map((item, index) => (
-            <MyListItem item={item} navigation={navigation} />
+            <MyListItem item={item} navigation={navigation}/>
           ))}
         </ScrollView>
       </View>

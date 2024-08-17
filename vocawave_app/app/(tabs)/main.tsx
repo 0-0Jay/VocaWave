@@ -11,7 +11,6 @@ export default function Main({ navigation } : {navigation: any}) {
       ...inputForm,
       [name]: value,
     }));
-    console.log(loginForm);
   }
 
   const login = async() => {
@@ -19,7 +18,6 @@ export default function Main({ navigation } : {navigation: any}) {
       'http://192.168.35.3:8099/user/login',
       loginForm
     ).then(response => {
-      console.log(response.data);
       if (response.data.status === false) {
         alert("ID/PW를 확인해주세요!");
       } else {
