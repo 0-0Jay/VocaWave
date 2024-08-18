@@ -4,13 +4,13 @@ import { StyleSheet } from 'react-native';
 export default function WordItem({ item }: { item: any }) {
 
     return (
-            <View key={item.code} style={styles.container}>
-                <Text>{item.no}</Text>
-                <Text style={styles.title} numberOfLines={1}>{item.word}</Text>
-                <Text style={styles.cnt}>{item.mean}</Text>
-                <TouchableOpacity><Text>수정</Text></TouchableOpacity>
-                <TouchableOpacity><Text>삭제</Text></TouchableOpacity>
-            </View>
+        <View key={item.code} style={styles.container}>
+            <Text>{item.no}</Text>
+            <Text style={styles.title} numberOfLines={1}>{item.word}</Text>
+            <Text style={styles.cnt}>{item.mean}</Text>
+            <TouchableOpacity><Text>수정</Text></TouchableOpacity>
+            <TouchableOpacity><Text>삭제</Text></TouchableOpacity>
+        </View>
     )
 }
 

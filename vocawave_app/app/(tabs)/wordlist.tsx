@@ -15,6 +15,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
       cnt: number
     }
   }
+  const [modalOpen, setModalOpen] = useState(false);
   const { params } = useRoute<RouteProp<paramlist, 'contentType'>>();
   const [words, setWords] = useState([]);
 
@@ -30,7 +31,6 @@ export default function Wordlist({ navigation }: { navigation: any }) {
 
   useEffect(() => {
     list();
-    console.log(words);
   }, []);
 
   return (
@@ -42,7 +42,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
           <Text>{params.wtitle}</Text>
           <Text>{params.cmt}</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalOpen(true)}>
           <Text>메뉴</Text>
         </TouchableOpacity>
       </View>

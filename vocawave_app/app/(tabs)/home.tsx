@@ -14,7 +14,6 @@ export default function Home({ navigation }: { navigation: any }) {
       'http://192.168.35.3:8099/main/wordList/' + '123' + '?q=' + query
     ).then(response => {
       setMyList(response.data.wordlist);
-      console.log(response.data.wordlist);
     }).catch(error => {
       console.log(error);
     })

@@ -1,47 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import Footer from '../comp/footer';
 import Header from '../comp/header';
+import ShareItem from '../comp/shareitem';
+import axios from 'axios';
 
 export default function Share({ navigation }: { navigation: any }) {
+  const [shareList, setShareList] = useState([]);
+  const [query, setQuery] = useState('');
+
+  const inputQuery = (value: string) => {
+    setQuery(value);
+    console.log(query);
+  }
+
+  const list = async () => {
+    await axios.get(
+      'http://192.168.35.3:8099/share/search?q=' + query
+    ).then(response => {
+      setShareList(response.data.wordlist);
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    list();
+  }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
       <View style={{ height: 70 }} />
+      <View style={styles.homeTop}>
+        <TextInput style={styles.tinput} onChangeText={text => { inputQuery(text) }} />
+        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
+          <Text style={styles.buttonText}>
+            검색
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
+          <Text style={styles.buttonText}>
+            추가
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.container}>
         <ScrollView>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
-          <Text style={{ flex: 1 }}>나의 단어장</Text>
-          <Text>테스트 텍스트</Text>
+          {shareList.map((item) => (
+            <ShareItem item={item} navigation={navigation} />
+          ))}
         </ScrollView>
       </View>
       <View style={{ height: 70 }} />
@@ -52,6 +60,7 @@ export default function Share({ navigation }: { navigation: any }) {
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -75,13 +84,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#ef9995',
     padding: 10,
     borderRadius: 7,
+    margin: 10,
+    width: '45%',
+    alignItems: 'center',
+  },
+  tinput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 8,
+    width: '70%',
+    borderRadius: 5,
+  },
+  tbutton: {
+    backgroundColor: '#ef9995',
+    padding: 10,
+    borderRadius: 7,
     margin: 5,
-    width: 300,
+    width: '10%',
+    height: 40,
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 20
+    fontSize: 15
   },
   modalBackground: {
     flex: 1,
@@ -99,7 +125,6 @@ const styles = StyleSheet.create({
   },
   homeTop: {
     flexDirection: 'row',
-
+    backgroundColor: '#fffffa'
   },
 });
-

@@ -59,8 +59,8 @@ export default function Main({ navigation } : {navigation: any}) {
                 회원가입
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText} onPress={() => setModalOpen(false)}>
+            <TouchableOpacity style={styles.button} onPress={() => setModalOpen(false)}>
+              <Text style={styles.buttonText}>
                 닫기
               </Text>
             </TouchableOpacity>

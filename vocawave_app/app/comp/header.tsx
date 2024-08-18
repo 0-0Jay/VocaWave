@@ -38,8 +38,8 @@ export default function Header({ navigation }: { navigation: any }) {
                                 닉네임 변경
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.modalButton}>
-                            <Text style={styles.buttonText} onPress={() => setModalOpen(false)}>
+                        <TouchableOpacity style={styles.modalButton} onPress={() => setModalOpen(false)}>
+                            <Text style={styles.buttonText}>
                                 닫기
                             </Text>
                         </TouchableOpacity>
