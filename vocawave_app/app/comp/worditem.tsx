@@ -1,44 +1,52 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 
-export default function WordItem({ item }: { item: any }) {
+export default function WordItem({ item, index }: { item: any, index: any }) {
 
     return (
-        <View key={item.code} style={styles.container}>
-            <Text>{item.no}</Text>
-            <Text style={styles.title} numberOfLines={1}>{item.word}</Text>
-            <Text style={styles.cnt}>{item.mean}</Text>
-            <TouchableOpacity><Text>수정</Text></TouchableOpacity>
-            <TouchableOpacity><Text>삭제</Text></TouchableOpacity>
+        <View key={item.code} style={(index % 2 == 0)? styles.oddRow : styles.evenRow}>
+            <Text style={styles.word} numberOfLines={1}>{item.word}</Text>
+            <Text style={styles.mean}>{item.mean}</Text>
+            <TouchableOpacity style={{width: '5%'}}><Text style={styles.ed}>수정</Text></TouchableOpacity>
+            <TouchableOpacity style={{width: '5%'}}><Text style={styles.ed}>삭제</Text></TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    oddRow: {
         flex: 1,
-        borderWidth: 0.5,
-        borderTopColor: '#000000',
-        borderBottomColor: '#000000',
         flexDirection: 'row',
+        width: '100%',
+        alignItems: 'center'
     },
-    content: {
-        width: '70%',
+    evenRow: {
+        backgroundColor:'#F0E3BD',
+        flex: 1,
+        flexDirection: 'row',
+        width: '100%',
+        alignItems: 'center',
     },
-    title: {
-        fontSize: 25,
-        fontWeight: 'bold',
-    },
-    cmt: {
-        fontSize: 15,
-    },
-    cnt: {
-        fontSize: 10,
-        color: '#868e96'
-    },
-    rate: {
-        paddingLeft: 20,
-        width: '30%',
+    word: {
+        width: '40%',
         fontSize: 20,
-    }
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        textAlign: 'center',
+        flexWrap: 'wrap'
+    },
+    ed: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        fontSize: 10,
+    },
+    mean: {
+        width: '45%',
+        fontSize: 20,
+        color: '#70767D',
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        textAlign: 'center',
+        flexWrap: 'wrap',
+    },
 });

@@ -5,6 +5,7 @@ import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Scro
 import Footer from '../comp/footer';
 import Header from '../comp/header';
 import WordItem from '../comp/worditem';
+import { LOCALHOST } from '../constants';
 
 export default function Wordlist({ navigation }: { navigation: any }) {
   type paramlist = {
@@ -21,7 +22,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
 
   const list = async () => {
     await axios.get(
-      'http://192.168.35.3:8099/main/words/' + params.code
+      LOCALHOST + '/main/words/' + params.code
     ).then(response => {
       setWords(response.data.words);
     }).catch(error => {
@@ -47,19 +48,40 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row'}}>
-          <Text>No.</Text>
-          <Text>Word</Text>
-          <Text>Mean</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{width: '40%', textAlign: 'center'}}>단어</Text>
+          <Text style={{width: '45%', textAlign: 'center'}}>뜻/의미</Text>
+          <Text style={{width: '5%', fontSize: 10}}>수정</Text>
+          <Text style={{width: '5%', fontSize: 10}}>삭제</Text>
         </View>
-        <ScrollView>
+        <ScrollView style={{width: '100%'}}>
           {words.map((item, index) => (
-            <WordItem item={item} />
+            <WordItem key={index} item={item} index={index}/>
           ))}
         </ScrollView>
       </View>
-      <View style={{ height: 70 }} />
-      <Footer navigation={navigation} />
+      <View style={styles.buttomMenu}>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text>
+            단어 추가
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text>
+            단어장 삭제
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text>
+            테스트
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text>
+            공유
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -68,8 +90,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fffffa',
+    width: '100%'
   },
   title: {
     color: '#515233',
@@ -114,6 +136,25 @@ const styles = StyleSheet.create({
   homeTop: {
     flexDirection: 'row',
 
+  },
+  buttomMenu: {
+    flex: 0.2,
+    position: 'absolute',
+    zIndex: 1000,
+    bottom: 0,
+    backgroundColor: '#ece3ca',
+    flexDirection: 'row',
+  },
+  menuButton: {
+    flex: 1,
+    backgroundColor: '#ece3ca',
+    borderWidth: 0.5,
+    borderColor: 'gray',
+    padding: 5,
+    width: '25%',
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });
 

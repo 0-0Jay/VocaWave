@@ -4,6 +4,7 @@ import Footer from '../comp/footer';
 import Header from '../comp/header';
 import ShareItem from '../comp/shareitem';
 import axios from 'axios';
+import { LOCALHOST } from '../constants';
 
 export default function Share({ navigation }: { navigation: any }) {
   const [shareList, setShareList] = useState([]);
@@ -16,7 +17,7 @@ export default function Share({ navigation }: { navigation: any }) {
 
   const list = async () => {
     await axios.get(
-      'http://192.168.35.3:8099/share/search?q=' + query
+      LOCALHOST + '/share/search?q=' + query
     ).then(response => {
       setShareList(response.data.wordlist);
     }).catch(error => {
@@ -47,8 +48,8 @@ export default function Share({ navigation }: { navigation: any }) {
       </View>
       <View style={styles.container}>
         <ScrollView>
-          {shareList.map((item) => (
-            <ShareItem item={item} navigation={navigation} />
+          {shareList.map((item, index) => (
+            <ShareItem key={index} item={item} navigation={navigation} />
           ))}
         </ScrollView>
       </View>

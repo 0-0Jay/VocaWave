@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button, Scr
 import Header from '../comp/header';
 import Footer from '../comp/footer';
 import MyListItem from '../comp/mylistitem';
+import { LOCALHOST } from '../constants';
 
 export default function Home({ navigation }: { navigation: any }) {
   const [myList, setMyList] = useState([]);
@@ -11,7 +12,7 @@ export default function Home({ navigation }: { navigation: any }) {
 
   const list = async () => {
     await axios.get(
-      'http://192.168.35.3:8099/main/wordList/' + '123' + '?q=' + query
+      LOCALHOST + '/main/wordList/' + '123' + '?q=' + query
     ).then(response => {
       setMyList(response.data.wordlist);
     }).catch(error => {
@@ -34,7 +35,7 @@ export default function Home({ navigation }: { navigation: any }) {
       <View style={{ height: 70 }} />
       <View style={styles.homeTop}>
         <TextInput style={styles.tinput} onChangeText={text => { inputQuery(text) }} />
-        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
+        <TouchableOpacity style={styles.tbutton} onPress={list}>
           <Text style={styles.buttonText}>
             검색
           </Text>
@@ -48,7 +49,7 @@ export default function Home({ navigation }: { navigation: any }) {
       <View style={styles.container}>
         <ScrollView>
           {myList.map((item, index) => (
-            <MyListItem item={item} navigation={navigation}/>
+            <MyListItem key={index} item={item} navigation={navigation}/>
           ))}
         </ScrollView>
       </View>

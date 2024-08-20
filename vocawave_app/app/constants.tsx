@@ -1,0 +1,1 @@
+export const LOCALHOST = 'http://192.168.35.243:8099';

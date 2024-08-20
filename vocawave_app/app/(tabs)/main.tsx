@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
 import axios from 'axios';
+import { LOCALHOST } from '../constants';
 
 export default function Main({ navigation } : {navigation: any}) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function Main({ navigation } : {navigation: any}) {
 
   const login = async() => {
     await axios.post(
-      'http://192.168.35.3:8099/user/login',
+      LOCALHOST + '/user/login',
       loginForm
     ).then(response => {
       if (response.data.status === false) {
@@ -23,6 +24,23 @@ export default function Main({ navigation } : {navigation: any}) {
       } else {
         alert("로그인 성공!");
         navigation.navigate('Home');
+      }
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
+  const signUp = async () => {
+    await axios.post(
+      LOCALHOST + '/user/signup',
+      loginForm
+    ).then(response => {
+      if (response.data.status === false) {
+        alert("이미 존재하는 아이디/닉네임 입니다.");
+      } else {
+        alert("회원가입 성공! 로그인해주세요.");
+        setLoginForm({id : '', pw : '', nick: ''});
+        setModalOpen(false);
       }
     }).catch(error => {
       console.log(error);
@@ -51,10 +69,10 @@ export default function Main({ navigation } : {navigation: any}) {
         <View style={styles.modalBackground}>
           <View style={styles.modalContents}>
             <Text style={styles.title}>회원가입</Text>
-            <TextInput style={styles.input} id='id' placeholder="ID" onChangeText={text => {inputForm('id', text)}} />
-            <TextInput style={styles.input} id='pw' placeholder="PASSWORD" onChangeText={text => {inputForm('pw', text)}} />
-            <TextInput style={styles.input} id='nick' placeholder="NICKNAME" onChangeText={text => {inputForm('nick', text)}} />
-            <TouchableOpacity style={styles.button}>
+            <TextInput style={styles.input} id='id' value={loginForm.id} placeholder="ID" onChangeText={text => {inputForm('id', text)}} />
+            <TextInput style={styles.input} id='pw' value={loginForm.pw} placeholder="PASSWORD" onChangeText={text => {inputForm('pw', text)}} />
+            <TextInput style={styles.input} id='nick' value={loginForm.nick} placeholder="NICKNAME" onChangeText={text => {inputForm('nick', text)}} />
+            <TouchableOpacity style={styles.button} onPress={signUp}>
               <Text style={styles.buttonText}>
                 회원가입
               </Text>
