@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Modal, TextInput } from "react-native";
-import { useRoute } from '@react-navigation/native/lib/typescript/src';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function Header({ navigation }: { navigation: any }) {
-  const [modalOpen, setModalOpen] = useState(false);
-
   const goHome = () => {
     navigation.navigate('Home');
   }

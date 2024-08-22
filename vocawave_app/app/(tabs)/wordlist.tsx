@@ -1,8 +1,7 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { RouteProp, useRoute } from '@react-navigation/native'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
-import Footer from '../comp/footer';
+import { Image, StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import WordItem from '../comp/worditem';
 import { LOCALHOST } from '../constants';
@@ -61,22 +60,22 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         </ScrollView>
       </View>
       <View style={styles.buttomMenu}>
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
           <Text>
             단어 추가
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
           <Text>
             단어장 삭제
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
           <Text>
             테스트
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
           <Text>
             공유
           </Text>

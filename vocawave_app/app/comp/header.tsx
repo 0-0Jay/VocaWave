@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Modal, TextInput } from "react-native";
-import { useNavigation, DrawerActions } from '@react-navigation/native';
 
 export default function Header({ navigation }: { navigation: any }) {
     const [modalOpen, setModalOpen] = useState(false);

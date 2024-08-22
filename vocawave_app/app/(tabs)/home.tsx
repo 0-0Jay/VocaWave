@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import Footer from '../comp/footer';
 import MyListItem from '../comp/mylistitem';

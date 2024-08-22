@@ -1,4 +1,3 @@
-import { View, Text, StyleSheet } from "react-native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import MyWordList from '../(tabs)/home';
 import ShareWordList from '../(tabs)/share';

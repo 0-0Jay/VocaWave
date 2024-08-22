@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Footer from '../comp/footer';
 import Header from '../comp/header';
 import ShareItem from '../comp/shareitem';
 import axios from 'axios';
 import { LOCALHOST } from '../constants';
+import { SearchBar } from 'react-native-screens';
 
 export default function Share({ navigation }: { navigation: any }) {
   const [shareList, setShareList] = useState([]);
@@ -29,13 +30,17 @@ export default function Share({ navigation }: { navigation: any }) {
     list();
   }, []);
 
+  const search = async () => {
+    list();
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
       <View style={{ height: 70 }} />
       <View style={styles.homeTop}>
         <TextInput style={styles.tinput} onChangeText={text => { inputQuery(text) }} />
-        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
+        <TouchableOpacity style={styles.tbutton} onPress={search}>
           <Text style={styles.buttonText}>
             검색
           </Text>
