@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Modal, TextInput } from "react-native";
+import { getData, removeData } from '../storage';
 
 export default function Header({ navigation }: { navigation: any }) {
     const [modalOpen, setModalOpen] = useState(false);
+    const [nick, setNick] = useState('');
 
-    const logout = () => {
+    useEffect(() => {
+        const getNick = async() => {
+            const data = await getData('login')
+            setNick(data.nick);
+        }
+        getNick();
+    }, [])
+
+    const logout = async() => {
         alert("로그아웃!");
+        await removeData('login');
         navigation.navigate('Main')
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>닉네임 님</Text>
+            <Text style={styles.title}>{nick} 님</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={() => setModalOpen(true)}>
                     <Text style={styles.title}>P</Text>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import WordItem from '../comp/worditem';
-import { LOCALHOST } from '../constants';
+import axiosInstance from '../axios';
 
 export default function Wordlist({ navigation }: { navigation: any }) {
   type paramlist = {
@@ -20,8 +20,8 @@ export default function Wordlist({ navigation }: { navigation: any }) {
   const [words, setWords] = useState([]);
 
   const list = async () => {
-    await axios.get(
-      LOCALHOST + '/main/words/' + params.code
+    await axiosInstance.get(
+      '/main/words/' + params.code
     ).then(response => {
       setWords(response.data.words);
     }).catch(error => {

@@ -4,7 +4,7 @@ import Footer from '../comp/footer';
 import Header from '../comp/header';
 import ShareItem from '../comp/shareitem';
 import axios from 'axios';
-import { LOCALHOST } from '../constants';
+import axiosInstance from '../axios';
 import { SearchBar } from 'react-native-screens';
 
 export default function Share({ navigation }: { navigation: any }) {
@@ -17,8 +17,8 @@ export default function Share({ navigation }: { navigation: any }) {
   }
 
   const list = async () => {
-    await axios.get(
-      LOCALHOST + '/share/search?q=' + query
+    await axiosInstance.get(
+      '/share/search?q=' + query
     ).then(response => {
       setShareList(response.data.wordlist);
     }).catch(error => {

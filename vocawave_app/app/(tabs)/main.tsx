@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
-import axios from 'axios';
-import { LOCALHOST } from '../constants';
+import axiosInstance from '../axios';
+import { storeData, getData } from '../storage';
 
 export default function Main({ navigation } : {navigation: any}) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,14 +15,15 @@ export default function Main({ navigation } : {navigation: any}) {
   }
 
   const login = async() => {
-    await axios.post(
-      LOCALHOST + '/user/login',
+    await axiosInstance.post(
+      '/user/login',
       loginForm
     ).then(response => {
       if (response.data.status === false) {
         alert("ID/PW를 확인해주세요!");
       } else {
         alert("로그인 성공!");
+        storeData('login', JSON.stringify(response.data))
         navigation.navigate('Home');
       }
     }).catch(error => {
@@ -31,8 +32,8 @@ export default function Main({ navigation } : {navigation: any}) {
   }
 
   const signUp = async () => {
-    await axios.post(
-      LOCALHOST + '/user/signup',
+    await axiosInstance.post(
+      '/user/signup',
       loginForm
     ).then(response => {
       if (response.data.status === false) {

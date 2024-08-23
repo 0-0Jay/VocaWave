@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import axiosInstance from '../axios';
 import axios from 'axios';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import Footer from '../comp/footer';
 import MyListItem from '../comp/mylistitem';
-import { LOCALHOST } from '../constants';
+import { getData } from '../storage';
 
 export default function Home({ navigation }: { navigation: any }) {
   const [myList, setMyList] = useState([]);
   const [query, setQuery] = useState('');
 
+
   const list = async () => {
-    await axios.get(
-      LOCALHOST + '/main/wordList/' + '123' + '?q=' + query
+    const login = await getData('login');
+    await axiosInstance.get(
+      '/main/wordList/' + login.id + '?q=' + query
     ).then(response => {
       setMyList(response.data.wordlist);
     }).catch(error => {

@@ -1,15 +1,15 @@
 import { View, TouchableOpacity, Text, StyleSheet, Modal, TextInput, ScrollView } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-import { LOCALHOST } from '../constants';
+import axiosInstance from '../axios';
 
 export default function ShareItem({ navigation, item }: { navigation: any, item: any }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [sharelist, setSharelist] = useState([]);
 
     const openShare = async () => {
-        await axios.get(
-            LOCALHOST + '/share/code/' + item.code
+        await axiosInstance.get(
+            '/share/code/' + item.code
         ).then(response => {
             setSharelist(response.data.words);
         }).catch(error => {
