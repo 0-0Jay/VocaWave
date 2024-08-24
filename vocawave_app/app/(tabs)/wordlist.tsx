@@ -1,10 +1,11 @@
 import { RouteProp, useRoute } from '@react-navigation/native'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, Modal, StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../comp/header';
 import WordItem from '../comp/worditem';
 import axiosInstance from '../axios';
+import Exam from '../comp/exam';
 
 export default function Wordlist({ navigation }: { navigation: any }) {
   type paramlist = {
@@ -12,10 +13,12 @@ export default function Wordlist({ navigation }: { navigation: any }) {
       code: string,
       wtitle: string,
       cmt: string,
-      cnt: number
+      cnt: number,
+      rate: number,
     }
   }
-  const [modalOpen, setModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [examOpen, setExamOpen] = useState(false);
   const { params } = useRoute<RouteProp<paramlist, 'contentType'>>();
   const [words, setWords] = useState([]);
 
@@ -42,45 +45,49 @@ export default function Wordlist({ navigation }: { navigation: any }) {
           <Text>{params.wtitle}</Text>
           <Text>{params.cmt}</Text>
         </View>
-        <TouchableOpacity onPress={() => setModalOpen(true)}>
+        <TouchableOpacity onPress={() => setMenuOpen(true)}>
           <Text>메뉴</Text>
         </TouchableOpacity>
+        <Text>학습률 : {params.rate} %</Text>
       </View>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{width: '40%', textAlign: 'center'}}>단어</Text>
-          <Text style={{width: '45%', textAlign: 'center'}}>뜻/의미</Text>
-          <Text style={{width: '5%', fontSize: 10}}>수정</Text>
-          <Text style={{width: '5%', fontSize: 10}}>삭제</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ width: '40%', textAlign: 'center' }}>단어</Text>
+          <Text style={{ width: '45%', textAlign: 'center' }}>뜻/의미</Text>
+          <Text style={{ width: '5%', fontSize: 10 }}>수정</Text>
+          <Text style={{ width: '5%', fontSize: 10 }}>삭제</Text>
         </View>
-        <ScrollView style={{width: '100%'}}>
+        <ScrollView style={{ width: '100%' }}>
           {words.map((item, index) => (
-            <WordItem key={index} item={item} index={index}/>
+            <WordItem key={index} item={item} index={index} />
           ))}
         </ScrollView>
       </View>
       <View style={styles.buttomMenu}>
-        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => { }}>
           <Text>
             단어 추가
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => { }}>
           <Text>
             단어장 삭제
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => setExamOpen(true)}>
           <Text>
             테스트
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => { }}>
           <Text>
             공유
           </Text>
         </TouchableOpacity>
       </View>
+      <Modal visible={examOpen} style={styles.container} transparent={true}>
+        <Exam code={params.code} words={words} setExamOpen={setExamOpen}/>
+      </Modal>
     </View>
   );
 }
