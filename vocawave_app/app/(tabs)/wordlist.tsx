@@ -19,6 +19,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
   }
   const [menuOpen, setMenuOpen] = useState(false);
   const [examOpen, setExamOpen] = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const { params } = useRoute<RouteProp<paramlist, 'contentType'>>();
   const [words, setWords] = useState([]);
 
@@ -64,7 +65,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         </ScrollView>
       </View>
       <View style={styles.buttomMenu}>
-        <TouchableOpacity style={styles.menuButton} onPress={() => { }}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => setAddOpen(true)}>
           <Text>
             단어 추가
           </Text>
@@ -85,8 +86,18 @@ export default function Wordlist({ navigation }: { navigation: any }) {
           </Text>
         </TouchableOpacity>
       </View>
+      <Modal visible={menuOpen} style={{}} transparent={true}>
+        <View>
+            <Text>메뉴 모달 영역</Text>
+        </View>
+      </Modal>
       <Modal visible={examOpen} style={styles.container} transparent={true}>
         <Exam code={params.code} words={words} setExamOpen={setExamOpen}/>
+      </Modal>
+      <Modal visible={addOpen} style={styles.container} transparent={true}>
+        <View>
+            <Text>단어 추가 모달 영역</Text>
+        </View>
       </Modal>
     </View>
   );
