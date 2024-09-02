@@ -1,5 +1,4 @@
 import { RouteProp, useRoute } from '@react-navigation/native'
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Image, Modal, StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../comp/header';
@@ -37,6 +36,20 @@ export default function Wordlist({ navigation }: { navigation: any }) {
     list();
   }, []);
 
+  const deleteList = async () => {
+    await axiosInstance.get(
+      "/main/delete/" + params.code
+    ).then(response => {
+      alert("삭제되었습니다!");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
+      });
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
@@ -53,10 +66,9 @@ export default function Wordlist({ navigation }: { navigation: any }) {
       </View>
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ width: '40%', textAlign: 'center' }}>단어</Text>
-          <Text style={{ width: '45%', textAlign: 'center' }}>뜻/의미</Text>
-          <Text style={{ width: '5%', fontSize: 10 }}>수정</Text>
-          <Text style={{ width: '5%', fontSize: 10 }}>삭제</Text>
+          <Text style={{ width: '80%', textAlign: 'center' }}>단어/의미</Text>
+          <Text style={{ width: '10%', fontSize: 10 }}>수정</Text>
+          <Text style={{ width: '10%', fontSize: 10 }}>삭제</Text>
         </View>
         <ScrollView style={{ width: '100%' }}>
           {words.map((item, index) => (
@@ -70,7 +82,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
             단어 추가
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => { }}>
+        <TouchableOpacity style={styles.menuButton} onPress={deleteList}>
           <Text>
             단어장 삭제
           </Text>

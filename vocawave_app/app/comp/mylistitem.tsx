@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 
-export default function MyListItem({ navigation, item }: { navigation: any, item: any }) {
+export default function MyListItem({ navigation, item }: { navigation: any, item: any}) {
     const wordlist = () => navigation.navigate('Wordlist', item);
 
     return (

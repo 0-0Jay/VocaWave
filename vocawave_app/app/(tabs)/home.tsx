@@ -11,7 +11,6 @@ export default function Home({ navigation }: { navigation: any }) {
   const [myList, setMyList] = useState([]);
   const [query, setQuery] = useState('');
 
-
   const list = async () => {
     const login = await getData('login');
     await axiosInstance.get(
@@ -52,7 +51,7 @@ export default function Home({ navigation }: { navigation: any }) {
       <View style={styles.container}>
         <ScrollView>
           {myList.map((item, index) => (
-            <MyListItem key={index} item={item} navigation={navigation}/>
+            <MyListItem key={index} item={item} navigation={navigation} />
           ))}
         </ScrollView>
       </View>

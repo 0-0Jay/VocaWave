@@ -1,28 +1,81 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Modal, TextInput } from "react-native";
-import { getData, removeData } from '../storage';
+import axiosInstance from '../axios';
+import { getData, removeData, storeData } from '../storage';
 
 export default function Header({ navigation }: { navigation: any }) {
     const [modalOpen, setModalOpen] = useState(false);
-    const [nick, setNick] = useState('');
+    const [login, setLogin] = useState({ nick: '', id: '' });
+    const [form, setForm] = useState({ id: '', pw: '', newpw: '', nick: '' });
+
+    const getLogin = async () => {
+        const data = await getData('login')
+        setLogin(data);
+        setForm(form => ({
+            ...form,
+            ['id']: data.id,
+            ['nick']: data.nick,
+        }))
+    }
 
     useEffect(() => {
-        const getNick = async() => {
-            const data = await getData('login')
-            setNick(data.nick);
-        }
-        getNick();
+        getLogin();
     }, [])
 
-    const logout = async() => {
+    const logout = async () => {
         alert("로그아웃!");
         await removeData('login');
         navigation.navigate('Main')
     }
 
+    const inputForm = (name: string, value: string) => {
+        setForm(form => ({
+            ...form,
+            [name]: value,
+        }));
+    }
+
+    const changePw = async () => {
+        await axiosInstance.post(
+            '/user/changePw',
+            form
+        ).then(response => {
+            if (response.data.result === false) {
+                alert("기존 비밀번호가 틀렸습니다. 다시 입력해주세요!");
+            } else {
+                alert("변경되었습니다!");
+                setForm(form => ({
+                    ...form,
+                    ['pw']: '',
+                    ['newpw']: ''
+                }))
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
+    const changeNick = async () => {
+        await axiosInstance.post(
+            '/user/changeNick',
+            form
+        ).then(response => {
+            if (response.data.result === false) {
+                alert("이미 존재하는 닉네임입니다.");
+            } else {
+                alert("변경되었습니다!");
+                storeData('login', JSON.stringify({id : form.id, nick: form.nick}));
+                getLogin();
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{nick} 님</Text>
+            <Text style={styles.title}>{login.nick} 님</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={() => setModalOpen(true)}>
                     <Text style={styles.title}>P</Text>
@@ -35,15 +88,19 @@ export default function Header({ navigation }: { navigation: any }) {
                 <View style={styles.modalBackground}>
                     <View style={styles.modalContents}>
                         <Text style={styles.modalTitle}>내 정보</Text>
-                        <TextInput style={styles.input} placeholder="ID" />
-                        <TextInput style={styles.input} placeholder="PA******" />
-                        <TouchableOpacity style={styles.modalButton}>
+                        <Text style={{ width: '100%', paddingLeft: '3%' }}>아이디</Text>
+                        <TextInput style={styles.input} value={login.id} readOnly />
+                        <Text style={{ width: '100%', paddingLeft: '3%' }}>비밀번호 변경</Text>
+                        <TextInput style={styles.input} value={form.pw} placeholder='기존 비밀번호 입력' onChangeText={text => { inputForm('pw', text) }} />
+                        <TextInput style={styles.input} value={form.newpw} placeholder='새 비밀번호 입력' onChangeText={text => { inputForm('newpw', text) }} />
+                        <TouchableOpacity style={styles.modalButton} onPress={changePw}>
                             <Text style={styles.buttonText}>
                                 비밀번호 변경
                             </Text>
                         </TouchableOpacity>
-                        <TextInput style={styles.input} placeholder="NICKNAME" />
-                        <TouchableOpacity style={styles.modalButton}>
+                        <Text style={{ width: '100%', paddingLeft: '3%' }}>닉네임 변경</Text>
+                        <TextInput style={styles.input} placeholder={login.nick} value={form.nick} onChangeText={text => { inputForm('nick', text) }} />
+                        <TouchableOpacity style={styles.modalButton} onPress={changeNick}>
                             <Text style={styles.buttonText}>
                                 닉네임 변경
                             </Text>
