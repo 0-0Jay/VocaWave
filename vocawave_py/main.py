@@ -34,7 +34,6 @@ async def test(request: Request) -> dict:
 # 실행방법
 # 1. cmd를 켜고 main.py가 있는 폴더로 cd를 통해 이동
 # 2. uvicorn main:app --reload 명령어 실행
-# 2-1. --reload 옵션은 실시간 반영 느낌이라 ctrl + C로 프로그램 종료가 안됨. 안쓰는거 추천
 
 # 테스트용 코드
 # if __name__ == '__main__':
