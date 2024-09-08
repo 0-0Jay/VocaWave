@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 #127.0.0.1:8000/main/
+#192.168.35.57:8000/main/
+
 app = FastAPI()
 origins = ["*"]
 # CORS 설정 추가
