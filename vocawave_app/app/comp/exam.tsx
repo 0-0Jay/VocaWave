@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ListRenderItem } from "react-native";
-import { TextInput } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, TouchableOpacity, ListRenderItem, ScrollView, TextInput } from "react-native";
 import axiosInstance from '../axios';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function exam({ code, words, setExamOpen }: { code: any, words: any, setExamOpen: any }) {
     interface ExamItem {
@@ -13,7 +13,7 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
     const [index, setIndex] = useState(0);
     const [score, setScore] = useState<ExamItem[]>([]);
     const exam = useRef<ExamItem[]>([]);
-    const size = score.length;
+    const size = useRef(0);
 
     const reloadExam = () => {
         setScore([]);
@@ -30,6 +30,10 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
             return addWord;
         });
         exam.current = list;
+        size.current = exam.current.length;
+        console.log(index);
+        console.log(size.current);
+        console.log(exam.current[index])
     }
 
     useEffect(() => {
@@ -47,7 +51,8 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
     const submit = async () => {
         console.log(exam.current);
         await axios.post(
-            'http://192.168.35.243:8000/main/test',
+            // 'http://192.168.35.243:8000/main/test',
+            'http://172.26.13.211:8000/main/test',
             { list: exam.current, code: code }
         ).then(response => {
             setScore(response.data.score);
@@ -58,35 +63,41 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
     }
 
     const clickButton = (name: any) => {
-        if (name === "left") {
-            setIndex(id => (id + (size - 1)) % size)
-        } else {
-            setIndex(id => (id + 1) % size)
+        if (name === "left" && index > 0) {
+            setIndex(id => id - 1)
+        } else if (name === "right" && index < size.current) {
+            setIndex(id => id + 1)
         }
     }
 
     return (
-        <View style={styles.modalBackground}>
+        <GestureHandlerRootView style={styles.modalBackground}>
             <View style={styles.modalContents}>
-                <View style={styles.examItem}>
-                    <TouchableOpacity onPress={() => clickButton('left')}>
-                        <Text>{'<'}</Text>
-                    </TouchableOpacity>
-                    {(exam.current[index].ans[0] === 'W') ? (
-                        <View>
-                            <Text style={{ width: 200 }}>{exam.current[index].word}</Text>
-                            <TextInput style={{ width: 200 }}>{exam.current[index].mean}</TextInput>
-                        </View>
-                    ) : (
-                        <View>
-                            <TextInput style={{ width: 200 }}>{exam.current[index].word}</TextInput>
-                            <Text style={{ width: 200 }}>{exam.current[index].mean}</Text>
-                        </View>
-                    )}
-                    <TouchableOpacity onPress={() => { clickButton('right') }}>
-                        <Text>{'>'}</Text>
-                    </TouchableOpacity>
+                <View style={styles.examRow}>
+                    <Text style={{width: '10%'}}>No.</Text>
+                    <Text style={{width: '80%', justifyContent:'center', textAlign: 'center'}}>Word / Mean</Text>
                 </View>
+                <ScrollView style={styles.scroll}>
+                    {exam.current.map((it, index) => (
+                        (it.ans.charAt(0) == "W") ? (
+                            <View style={styles.examRow}>
+                                <Text style={{width: '10%', justifyContent:'center', alignItems: 'center',}}>{index + 1}</Text>
+                                <View style={{width: '80%', justifyContent:'center', alignItems: 'center',}}>
+                                    <TextInput style={{fontSize : 20}}></TextInput>
+                                    <Text style={{fontSize : 20, backgroundColor: '#FFF'}}>{it.mean}</Text>
+                                </View>
+                            </View>
+                        ) : (
+                            <View style={styles.examRow}>
+                                <Text style={{width: '10%', justifyContent:'center', alignItems: 'center',}}>{index + 1}</Text>
+                                <View style={{width: '80%', justifyContent:'center', alignItems: 'center', }}>
+                                    <Text style={{fontSize : 20}}>{it.word}</Text>
+                                    <TextInput style={{fontSize : 20, backgroundColor: '#FFF'}}></TextInput>
+                                </View>
+                            </View>
+                        )
+                    ))}
+                </ScrollView>
                 <TouchableOpacity onPress={() => submit}>
                     <Text>제출하기</Text>
                 </TouchableOpacity>
@@ -94,7 +105,7 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
                     <Text>닫기</Text>
                 </TouchableOpacity>
             </View >
-        </View >
+        </GestureHandlerRootView >
     )
 }
 
@@ -112,10 +123,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ece3ca',
+        height: 500
     },
     examItem: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    examRow: {
         flexDirection: 'row',
+        fontWeight: 'bold',
+        borderBottomColor: '#000000',
+        borderWidth: 1,
+        fontSize: 20,
+    },
+    scroll: {
+        height: 10
     }
 });
