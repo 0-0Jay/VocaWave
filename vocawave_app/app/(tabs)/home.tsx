@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axios';
 import axios from 'axios';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Header from '../comp/header';
 import Footer from '../comp/footer';
 import MyListItem from '../comp/mylistitem';
@@ -41,11 +41,13 @@ export default function Home({ navigation }: { navigation: any }) {
           <Text style={styles.buttonText}>
             검색
           </Text>
+          <Image source={require('')} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
           <Text style={styles.buttonText}>
             추가
           </Text>
+          <Image source={require('')} />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
