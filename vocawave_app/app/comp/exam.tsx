@@ -51,8 +51,8 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
     const submit = async () => {
         console.log(exam.current);
         await axios.post(
-            // 'http://192.168.35.243:8000/main/test',
-            'http://172.26.13.211:8000/main/test',
+            'http://192.168.35.243:8000/main/test',
+            // 'http://172.26.13.211:8000/main/test',
             { list: exam.current, code: code }
         ).then(response => {
             setScore(response.data.score);

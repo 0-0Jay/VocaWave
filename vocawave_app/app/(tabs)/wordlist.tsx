@@ -1,10 +1,12 @@
 import { RouteProp, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react';
-import { Image, Modal, StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, Modal, StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Header from '../comp/header';
 import WordItem from '../comp/worditem';
 import axiosInstance from '../axios';
 import Exam from '../comp/exam';
+import AddWord from '../comp/addword';
+import { getData, removeData, storeData } from '../storage';
 
 export default function Wordlist({ navigation }: { navigation: any }) {
   type paramlist = {
@@ -36,11 +38,11 @@ export default function Wordlist({ navigation }: { navigation: any }) {
     list();
   }, []);
 
-  const deleteList = async () => {
+  const handleDelete = async() => {
     await axiosInstance.get(
       "/main/delete/" + params.code
     ).then(response => {
-      alert("삭제되었습니다!");
+      alert("삭제되었습니다.");
       navigation.reset({
         index: 0,
         routes: [{ name: 'Home' }],
@@ -49,6 +51,39 @@ export default function Wordlist({ navigation }: { navigation: any }) {
       console.log(e);
     })
   }
+
+  const handleShare = async() => {
+    const data = await getData('login');
+    await axiosInstance.post(
+      "/share/update",
+      { code: params.code, nick: data.nick}
+    ).then(response => {
+      if (response.data.result === true) {
+        alert("공유되었습니다!");
+      } else {
+        alert("이미 공유 중인 단어장입니다.");
+      }
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
+  const deleteList = async() => {
+    Alert.alert(
+      "단어장 삭제", "정말로 삭제하시겠습니까?",
+      [{text:"취소", style: 'cancel'}, {text : "삭제", onPress: () => handleDelete()}],
+      {cancelable : false}
+    );
+  }
+
+  const shareList = async() => {
+    Alert.alert(
+      "단어장 공유", "이 단어장을 공유하시겠습니까?",
+      [{text:"취소", style: 'cancel'}, {text : "확인", onPress: () => handleShare()}],
+      {cancelable : false}
+    );
+  }
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -92,7 +127,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
             테스트
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.menuButton} onPress={() => { }}>
+        <TouchableOpacity style={styles.menuButton} onPress={shareList}>
           <Text>
             공유
           </Text>
@@ -107,9 +142,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         <Exam code={params.code} words={words} setExamOpen={setExamOpen}/>
       </Modal>
       <Modal visible={addOpen} style={styles.container} transparent={true}>
-        <View>
-            <Text>단어 추가 모달 영역</Text>
-        </View>
+        <AddWord code={params.code} setAddOpen={setAddOpen} />
       </Modal>
     </View>
   );

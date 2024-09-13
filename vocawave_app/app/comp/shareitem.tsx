@@ -19,7 +19,7 @@ export default function ShareItem({ navigation, item }: { navigation: any, item:
     }
 
     return (
-        <>
+        <View>
             <TouchableOpacity onPress={openShare}>
                 <View key={item.code} style={styles.container}>
                     <View style={styles.content}>
@@ -67,7 +67,7 @@ export default function ShareItem({ navigation, item }: { navigation: any, item:
                     </View>
                 </View>
             </Modal>
-        </>
+        </View>
     )
 }
 

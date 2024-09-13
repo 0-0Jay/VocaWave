@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axios';
 import axios from 'axios';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Image, Modal } from 'react-native';
 import Header from '../comp/header';
 import Footer from '../comp/footer';
 import MyListItem from '../comp/mylistitem';
@@ -10,9 +10,17 @@ import { getData } from '../storage';
 export default function Home({ navigation }: { navigation: any }) {
   const [myList, setMyList] = useState([]);
   const [query, setQuery] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [listForm, setListForm] = useState({ wtitle: '', cmt: '', id: '' });
+  const [login, setLogin] = useState({ id: '', nick: '' });
 
   const list = async () => {
     const login = await getData('login');
+    setListForm(form => ({
+      ...form,
+      ['id']: login.id,
+    }))
+
     await axiosInstance.get(
       '/main/wordList/' + login.id + '?q=' + query
     ).then(response => {
@@ -31,6 +39,33 @@ export default function Home({ navigation }: { navigation: any }) {
     console.log(query);
   }
 
+  const inputForm = (name: string, value: string) => {
+    setListForm(listForm => ({
+      ...listForm,
+      [name]: value,
+    }));
+  }
+
+  const createList = async() => {
+    await axiosInstance.post(
+      '/main/create',
+      listForm
+    ).then(response => {
+      alert('생성되었습니다.');
+      setListForm(listForm => ({
+        ...listForm,
+        ['wtitle'] : '',
+        ['cmt'] : ''
+      }))
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
+      });
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
@@ -41,14 +76,33 @@ export default function Home({ navigation }: { navigation: any }) {
           <Text style={styles.buttonText}>
             검색
           </Text>
-          <Image source={require('')} />
+          {/* <Image source={require('')} /> */}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
+        <TouchableOpacity style={styles.tbutton} onPress={() => setModalOpen(true)}>
           <Text style={styles.buttonText}>
             추가
           </Text>
-          <Image source={require('')} />
+          {/* <Image source={require('')} /> */}
         </TouchableOpacity>
+        <Modal visible={modalOpen} style={styles.container} transparent={true}>
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContents}>
+              <Text style={styles.title}>새 단어장 생성</Text>
+              <TextInput style={styles.input} id='wtitle' value={listForm.wtitle} placeholder="제목을 입력하세요." onChangeText={text => { inputForm('wtitle', text) }} />
+              <TextInput style={styles.input} id='cmt' value={listForm.cmt} placeholder="설명을 간략하게 적어주세요." onChangeText={text => { inputForm('cmt', text) }} />
+              <TouchableOpacity style={styles.button} onPress={createList}>
+                <Text style={styles.buttonText}>
+                  단어장 생성
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => setModalOpen(false)}>
+                <Text style={styles.buttonText}>
+                  닫기
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
       <View style={styles.container}>
         <ScrollView>
@@ -90,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 7,
     margin: 10,
-    width: '45%',
+    width: '70%',
     alignItems: 'center',
   },
   tinput: {
