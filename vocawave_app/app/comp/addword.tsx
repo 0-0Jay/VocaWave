@@ -4,7 +4,25 @@ import { View, Text, StyleSheet, TouchableOpacity, ListRenderItem, ScrollView, T
 import axiosInstance from '../axios';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function addword({ code, setAddOpen }: { code: any, setAddOpen: any }) {
+export default function addword({ code, setAddOpen, refresh, setRefresh }: { code: any, setAddOpen: any, refresh: boolean, setRefresh : any }) {
+    const [word, setWord] = useState({code : code, word : '', mean : '' , type : 2});
+    const [share, setShare] = useState({code : code, sharecode : ''});
+
+    const addShare = async () => {
+        await axiosInstance.post(
+            '/main/addcode',
+            share
+        ).then(response => {
+            if (response.data.result) {
+                console.log(response.data.status);
+                alert("추가되었습니다!");
+                setRefresh(!refresh);
+            } else {
+                alert("코드가 잘못되었거나, 빈 단어장 입니다.");
+            }
+        })
+    }
+
     return (
         <GestureHandlerRootView style={styles.modalBackground}>
             <View style={styles.modalContents}>

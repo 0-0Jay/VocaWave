@@ -23,6 +23,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
   const [addOpen, setAddOpen] = useState(false);
   const { params } = useRoute<RouteProp<paramlist, 'contentType'>>();
   const [words, setWords] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const list = async () => {
     await axiosInstance.get(
@@ -36,7 +37,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
 
   useEffect(() => {
     list();
-  }, []);
+  }, [refresh]);
 
   const handleDelete = async() => {
     await axiosInstance.get(
@@ -142,7 +143,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         <Exam code={params.code} words={words} setExamOpen={setExamOpen}/>
       </Modal>
       <Modal visible={addOpen} style={styles.container} transparent={true}>
-        <AddWord code={params.code} setAddOpen={setAddOpen} />
+        <AddWord code={params.code} setAddOpen={setAddOpen} refresh={refresh} setRefresh={setRefresh}/>
       </Modal>
     </View>
   );
