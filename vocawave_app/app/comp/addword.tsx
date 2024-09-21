@@ -4,9 +4,34 @@ import { View, Text, StyleSheet, TouchableOpacity, ListRenderItem, ScrollView, T
 import axiosInstance from '../axios';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function addword({ code, setAddOpen, refresh, setRefresh }: { code: any, setAddOpen: any, refresh: boolean, setRefresh : any }) {
-    const [word, setWord] = useState({code : code, word : '', mean : '' , type : 2});
-    const [share, setShare] = useState({code : code, sharecode : ''});
+export default function addword({ code, setAddOpen, refresh, setRefresh }: { code: any, setAddOpen: any, refresh: boolean, setRefresh: any }) {
+    const [word, setWord] = useState({ code: code, word: '', mean: '', type: 2 });
+    const [share, setShare] = useState({ code: code, sharecode: '' });
+
+    const editWord = async () => {
+        await axiosInstance.post(
+            '/main/edit',
+            word
+        ).then(response => {
+            alert("추가되었습니다!");
+            setRefresh(!refresh);
+        })
+    }
+
+    const inputWord = (name: string, value: string) => {
+        setWord(word => ({
+            ...word,
+            [name]: value,
+        }));
+    }
+
+    const inputShare = (name: string, value: string) => {
+        setShare(share=> ({
+          ...share,
+          [name]: value,
+        }));
+      }
+
 
     const addShare = async () => {
         await axiosInstance.post(
@@ -27,13 +52,13 @@ export default function addword({ code, setAddOpen, refresh, setRefresh }: { cod
         <GestureHandlerRootView style={styles.modalBackground}>
             <View style={styles.modalContents}>
                 <Text style={styles.title}>단어 추가</Text>
-                <TextInput style={styles.input} placeholder="단어 입력" />
-                <TextInput style={styles.input} placeholder="의미 입력" />
-                <TouchableOpacity style={styles.button} onPress={() => { }}>
+                <TextInput style={styles.input} placeholder="단어 입력" onChangeText={text => { inputWord('word', text) }} />
+                <TextInput style={styles.input} placeholder="의미 입력" onChangeText={text => { inputWord('mean', text) }} />
+                <TouchableOpacity style={styles.button} onPress={() => editWord()}>
                     <Text style={styles.buttonText}>추가하기</Text>
                 </TouchableOpacity>
-                <TextInput style={styles.input} placeholder="코드 입력" />
-                <TouchableOpacity style={styles.button} onPress={() => { }}>
+                <TextInput style={styles.input} placeholder="코드 입력" onChangeText={text => { inputShare('sharecode', text) }} />
+                <TouchableOpacity style={styles.button} onPress={() => addShare()}>
                     <Text style={styles.buttonText}>코드로 추가하기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={() => setAddOpen(false)}>
