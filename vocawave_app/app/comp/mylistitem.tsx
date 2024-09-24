@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
+import ProgressCircle from './progressCircle';
 
 export default function MyListItem({ navigation, item }: { navigation: any, item: any}) {
     const wordlist = () => navigation.navigate('Wordlist', item);
@@ -13,6 +14,7 @@ export default function MyListItem({ navigation, item }: { navigation: any, item
                     <Text style={styles.cmt} numberOfLines={1}>{item.cmt}</Text>
                 </View>
                 <Text style={styles.rate}>학습률{'\n'}{item.rate} %</Text>
+                <ProgressCircle progress={item.rate} size={30} strokeWidth={15} />
             </View>
         </TouchableOpacity>
     )
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
     },
     content: {
         width: '70%',
+        marginLeft: 10
     },
     title: {
         fontSize: 25,

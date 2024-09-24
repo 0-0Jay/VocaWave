@@ -108,7 +108,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         </View>
         <ScrollView style={{ width: '100%' }}>
           {words.map((item, index) => (
-            <WordItem key={index} item={item} index={index} refresh={refresh} setRefresh={setRefresh} />
+            <WordItem code={params.code} key={index} item={item} index={index} refresh={refresh} setRefresh={setRefresh} />
           ))}
         </ScrollView>
       </View>
