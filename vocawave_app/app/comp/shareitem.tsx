@@ -2,6 +2,7 @@ import { View, TouchableOpacity, Text, StyleSheet, Modal, TextInput, ScrollView 
 import { useState } from 'react';
 import axios from 'axios';
 import axiosInstance from '../axios';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 export default function ShareItem({ navigation, item }: { navigation: any, item: any }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -17,6 +18,11 @@ export default function ShareItem({ navigation, item }: { navigation: any, item:
         })
         setModalOpen(true);
     }
+
+    const copyCode = () => {
+        Clipboard.setString(item.code);
+        alert('클립보드에 복사되었습니다.');
+    };
 
     return (
         <View>
@@ -54,7 +60,7 @@ export default function ShareItem({ navigation, item }: { navigation: any, item:
                         <Text style={{ color: 'gray' }}>단어 수 : {item.cnt}</Text>
                         <Text>단어장 코드</Text>
                         <TextInput value={item.code} readOnly />
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={copyCode}>
                             <Text style={styles.buttonText}>
                                 복사하기
                             </Text>
