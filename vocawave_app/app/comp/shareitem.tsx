@@ -20,7 +20,7 @@ export default function ShareItem({ navigation, item }: { navigation: any, item:
     }
 
     const copyCode = () => {
-        Clipboard.setString(item.code);
+        // Clipboard.setString('111');
         alert('클립보드에 복사되었습니다.');
     };
 
@@ -58,13 +58,14 @@ export default function ShareItem({ navigation, item }: { navigation: any, item:
                         </View>
                         <Text>제작자 : {item.nick}</Text>
                         <Text style={{ color: 'gray' }}>단어 수 : {item.cnt}</Text>
-                        <Text>단어장 코드</Text>
-                        <TextInput value={item.code} readOnly />
-                        <TouchableOpacity style={styles.button} onPress={copyCode}>
+                        <Text style={{marginTop: 5}}>단어장 코드</Text>
+                        <Text style={styles.code} selectable>{item.code}</Text>
+                        {/* <TouchableOpacity style={styles.button} onPress={copyCode}>
                             <Text style={styles.buttonText}>
                                 복사하기
                             </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <Text>복사해서 사용하세요.</Text>
                         <TouchableOpacity style={styles.button} onPress={() => setModalOpen(false)}>
                             <Text style={styles.buttonText} >
                                 닫기
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
     },
     content: {
         width: '70%',
+        marginLeft: 10
     },
     title: {
         fontSize: 25,
@@ -151,5 +153,19 @@ const styles = StyleSheet.create({
     oddRow: {
         width: '100%',
         flexDirection: 'row',
+    },
+    code: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 5,
+        width: 300,
+        padding: 5,
+        borderRadius: 5,
+        fontSize:20,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'gray'
     }
 });

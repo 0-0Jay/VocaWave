@@ -95,9 +95,6 @@ export default function Wordlist({ navigation }: { navigation: any }) {
           <Text>{params.wtitle}</Text>
           <Text>{params.cmt}</Text>
         </View>
-        <TouchableOpacity onPress={() => setMenuOpen(true)}>
-          <Text>메뉴</Text>
-        </TouchableOpacity>
         <Text>학습률 : {params.rate} %</Text>
       </View>
       <View style={styles.container}>
@@ -134,11 +131,6 @@ export default function Wordlist({ navigation }: { navigation: any }) {
           </Text>
         </TouchableOpacity>
       </View>
-      <Modal visible={menuOpen} style={{}} transparent={true}>
-        <View>
-            <Text>메뉴 모달 영역</Text>
-        </View>
-      </Modal>
       <Modal visible={examOpen} style={styles.container} transparent={true}>
         <Exam code={params.code} words={words} setExamOpen={setExamOpen}/>
       </Modal>

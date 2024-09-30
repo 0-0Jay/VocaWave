@@ -75,13 +75,10 @@ export default function Header({ navigation }: { navigation: any }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{login.nick} 님</Text>
+            <Text style={styles.title} onPress={() => setModalOpen(true)}>{login.nick} 님</Text>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={() => setModalOpen(true)}>
-                    <Text style={styles.title}>P</Text>
-                </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={logout}>
-                    <Text style={styles.title}>L</Text>
+                    <Text style={{color: '#515233',}}>LOGOUT</Text>
                 </TouchableOpacity>
             </View>
             <Modal visible={modalOpen} style={styles.container} transparent={true}>

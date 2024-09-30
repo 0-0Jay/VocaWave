@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, TextInput, Alert, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import axiosInstance from '../axios';
@@ -49,16 +49,20 @@ export default function WordItem({ code, item, index, refresh, setRefresh }: { c
                 <Text style={styles.word} numberOfLines={1}>{item.word}</Text>
                 <Text style={styles.mean}>{item.mean}</Text>
             </View>
-            <TouchableOpacity style={{ width: '5%' }} onPress={() => setModalOpen(true)}>
-                <Text style={styles.ed}>수정</Text>
+            <TouchableOpacity style={{ width: '10%' }} onPress={() => setModalOpen(true)}>
+                <Image
+                    source={require('../assets/edit.png')}
+                    style={{ margin: 10, width: 30, height: 30 }}
+                    resizeMode="cover"
+                />
             </TouchableOpacity>
             <Modal visible={modalOpen} style={styles.container} transparent={true}>
                 <View style={styles.modalBackground}>
                     <View style={styles.modalContents}>
                         <Text style={styles.title}>단어 수정</Text>
-                        <Text style={{ textAlign: 'left', width: '95%' }}>WORD</Text>
+                        <Text style={{ textAlign: 'left', width: '90%' }}>WORD</Text>
                         <TextInput style={styles.input} id='word' value={word.word} placeholder="WORD" onChangeText={text => { inputWord('word', text) }} />
-                        <Text style={{ textAlign: 'left', width: '95%' }}>MEAN</Text>
+                        <Text style={{ textAlign: 'left', width: '90%' }}>MEAN</Text>
                         <TextInput style={styles.input} id='mean' value={word.mean} placeholder="MEAN" onChangeText={text => { inputWord('mean', text) }} />
                         <TouchableOpacity style={styles.button} onPress={() => editWord()}>
                             <Text style={styles.buttonText}>
@@ -73,8 +77,12 @@ export default function WordItem({ code, item, index, refresh, setRefresh }: { c
                     </View>
                 </View>
             </Modal>
-            <TouchableOpacity style={{ width: '15%' }} onPress={() => deleteWord()}>
-                <Text style={styles.ed}>삭제</Text>
+            <TouchableOpacity style={{ width: '10%' }} onPress={() => deleteWord()}>
+                <Image
+                    source={require('../assets/delete.png')}
+                    style={{ margin: 10, width: 30, height: 30 }}
+                    resizeMode="cover"
+                />
             </TouchableOpacity>
         </View>
     )
@@ -114,7 +122,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     view: {
-        width: '80%',
+        width: '76%',
     },
     container: {
         flex: 1,

@@ -46,7 +46,7 @@ export default function Home({ navigation }: { navigation: any }) {
     }));
   }
 
-  const createList = async() => {
+  const createList = async () => {
     await axiosInstance.post(
       '/main/create',
       listForm
@@ -54,8 +54,8 @@ export default function Home({ navigation }: { navigation: any }) {
       alert('생성되었습니다.');
       setListForm(listForm => ({
         ...listForm,
-        ['wtitle'] : '',
-        ['cmt'] : ''
+        ['wtitle']: '',
+        ['cmt']: ''
       }))
       navigation.reset({
         index: 0,
@@ -72,17 +72,19 @@ export default function Home({ navigation }: { navigation: any }) {
       <View style={{ height: 70 }} />
       <View style={styles.homeTop}>
         <TextInput style={styles.tinput} onChangeText={text => { inputQuery(text) }} />
-        <TouchableOpacity style={styles.tbutton} onPress={list}>
-          <Text style={styles.buttonText}>
-            검색
-          </Text>
-          {/* <Image source={require('')} /> */}
+        <TouchableOpacity onPress={list}>
+          <Image
+            source={require('../assets/search.png')}
+            style={{ margin: 10, width: 30, height: 30 }}
+            resizeMode="cover"
+          />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tbutton} onPress={() => setModalOpen(true)}>
-          <Text style={styles.buttonText}>
-            추가
-          </Text>
-          {/* <Image source={require('')} /> */}
+        <TouchableOpacity onPress={() => setModalOpen(true)}>
+          <Image
+            source={require('../assets/addfile.png')}
+            style={{ margin: 10, width: 30, height: 30 }}
+            resizeMode="cover"
+          />
         </TouchableOpacity>
         <Modal visible={modalOpen} style={styles.container} transparent={true}>
           <View style={styles.modalBackground}>

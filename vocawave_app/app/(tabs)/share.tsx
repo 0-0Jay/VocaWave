@@ -40,15 +40,12 @@ export default function Share({ navigation }: { navigation: any }) {
       <View style={{ height: 70 }} />
       <View style={styles.homeTop}>
         <TextInput style={styles.tinput} onChangeText={text => { inputQuery(text) }} />
-        <TouchableOpacity style={styles.tbutton} onPress={search}>
-          <Text style={styles.buttonText}>
-            검색
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tbutton} onPress={() => { }}>
-          <Text style={styles.buttonText}>
-            추가
-          </Text>
+        <TouchableOpacity onPress={list}>
+          <Image
+            source={require('../assets/search.png')}
+            style={{ margin: 10, width: 30, height: 30 }}
+            resizeMode="cover"
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
@@ -99,7 +96,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     margin: 8,
-    width: '70%',
+    width: '80%',
     borderRadius: 5,
   },
   tbutton: {
