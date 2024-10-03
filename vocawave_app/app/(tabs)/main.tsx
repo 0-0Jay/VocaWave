@@ -51,7 +51,7 @@ export default function Main({ navigation } : {navigation: any}) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('C:/Users/PC/Desktop/project/vocawave-app/assets/images/logo2.png')}
+        source={require('C:/Users/PC/Desktop/project/vocawave_app/assets/images/logo2.png')}
       />
       <Text style={styles.title}>VocaWave</Text>
       <TextInput style={styles.input} placeholder="ID" onChangeText={text => {inputForm('id', text)}} />

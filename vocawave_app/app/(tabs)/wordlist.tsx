@@ -90,12 +90,12 @@ export default function Wordlist({ navigation }: { navigation: any }) {
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
       <View style={{ height: 70 }} />
-      <View>
-        <View>
-          <Text>{params.wtitle}</Text>
-          <Text>{params.cmt}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <View style={{paddingLeft: 10}}>
+          <Text style={{fontSize: 25, fontWeight: 'bold'}}>{params.wtitle}</Text>
+          <Text style={{fontSize: 15, color: 'gray'}}>{params.cmt}</Text>
         </View>
-        <Text>학습률 : {params.rate} %</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 'auto', padding: 15, }}>학습률 : {params.rate} %</Text>
       </View>
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
