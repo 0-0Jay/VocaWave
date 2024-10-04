@@ -83,7 +83,7 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
                             <View style={styles.examRow}>
                                 <Text style={{width: '10%', justifyContent:'center', alignItems: 'center',}}>{index + 1}</Text>
                                 <View style={{width: '80%', justifyContent:'center', alignItems: 'center',}}>
-                                    <TextInput style={{fontSize : 20}}></TextInput>
+                                    <TextInput style={{fontSize : 20, backgroundColor: '#ece3ca', borderColor: 'gray', borderWidth: 1}} onChangeText={text => writeAnswer(index, 'word', text)}></TextInput>
                                     <Text style={{fontSize : 20, backgroundColor: '#FFF'}}>{it.mean}</Text>
                                 </View>
                             </View>
@@ -91,8 +91,8 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
                             <View style={styles.examRow}>
                                 <Text style={{width: '10%', justifyContent:'center', alignItems: 'center',}}>{index + 1}</Text>
                                 <View style={{width: '80%', justifyContent:'center', alignItems: 'center', }}>
-                                    <Text style={{fontSize : 20}}>{it.word}</Text>
-                                    <TextInput style={{fontSize : 20, backgroundColor: '#FFF'}}></TextInput>
+                                    <Text style={{fontSize : 20, backgroundColor:'#ece3ca'}}>{it.word}</Text>
+                                    <TextInput style={{fontSize : 20, backgroundColor: '#FFF', borderColor: 'gray', borderWidth: 1}} onChangeText={text => writeAnswer(index, 'word', text)}></TextInput>
                                 </View>
                             </View>
                         )
@@ -117,13 +117,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContents: {
-        width: 350,
+        width: '100%',
         padding: 20,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ece3ca',
-        height: 500
+        height: '100%'
     },
     examItem: {
         justifyContent: 'center',
