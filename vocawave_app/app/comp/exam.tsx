@@ -31,9 +31,6 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
         });
         exam.current = list;
         size.current = exam.current.length;
-        console.log(index);
-        console.log(size.current);
-        console.log(exam.current[index])
     }
 
     useEffect(() => {
@@ -73,35 +70,40 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
     return (
         <GestureHandlerRootView style={styles.modalBackground}>
             <View style={styles.modalContents}>
+                <Text style={{ color: '#515233', fontSize: 35, marginBottom: 20,}}>단어 테스트</Text>
                 <View style={styles.examRow}>
-                    <Text style={{width: '10%'}}>No.</Text>
-                    <Text style={{width: '80%', justifyContent:'center', textAlign: 'center'}}>Word / Mean</Text>
+                    <Text style={{ width: '10%', justifyContent: 'center', textAlign: 'center' }}>No.</Text>
+                    <Text style={{ width: '90%', justifyContent: 'center', textAlign: 'center' }}>Word / Mean</Text>
                 </View>
                 <ScrollView style={styles.scroll}>
                     {exam.current.map((it, index) => (
                         (it.ans.charAt(0) == "W") ? (
-                            <View style={styles.examRow}>
-                                <Text style={{width: '10%', justifyContent:'center', alignItems: 'center',}}>{index + 1}</Text>
-                                <View style={{width: '80%', justifyContent:'center', alignItems: 'center',}}>
-                                    <TextInput style={{fontSize : 20, backgroundColor: '#ece3ca', borderColor: 'gray', borderWidth: 1}} onChangeText={text => writeAnswer(index, 'word', text)}></TextInput>
-                                    <Text style={{fontSize : 20, backgroundColor: '#FFF'}}>{it.mean}</Text>
+                            <View key={index} style={styles.examRow}>
+                                <View style={styles.index}>
+                                    <Text style={{ fontSize: 20 }}>{index + 1}</Text>
+                                </View>
+                                <View style={{ width: '90%', justifyContent: 'center', alignItems: 'center', }}>
+                                    <TextInput style={styles.wordBlank} onChangeText={text => writeAnswer(index, 'word', text)} placeholder='단어'></TextInput>
+                                    <Text style={styles.mean}>{it.mean}</Text>
                                 </View>
                             </View>
                         ) : (
-                            <View style={styles.examRow}>
-                                <Text style={{width: '10%', justifyContent:'center', alignItems: 'center',}}>{index + 1}</Text>
-                                <View style={{width: '80%', justifyContent:'center', alignItems: 'center', }}>
-                                    <Text style={{fontSize : 20, backgroundColor:'#ece3ca'}}>{it.word}</Text>
-                                    <TextInput style={{fontSize : 20, backgroundColor: '#FFF', borderColor: 'gray', borderWidth: 1}} onChangeText={text => writeAnswer(index, 'word', text)}></TextInput>
+                            <View key={index} style={styles.examRow}>
+                                <View style={styles.index}>
+                                    <Text style={{ fontSize: 20 }}>{index + 1}</Text>
+                                </View>
+                                <View style={{ width: '90%', justifyContent: 'center', alignItems: 'center', }}>
+                                    <Text style={styles.word}>{it.word}</Text>
+                                    <TextInput style={styles.meanblank} onChangeText={text => writeAnswer(index, 'word', text)} placeholder='의미'></TextInput>
                                 </View>
                             </View>
                         )
                     ))}
                 </ScrollView>
-                <TouchableOpacity onPress={() => submit}>
+                <TouchableOpacity style={styles.button} onPress={() => submit}>
                     <Text>제출하기</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setExamOpen(false)}>
+                <TouchableOpacity style={styles.button} onPress={() => setExamOpen(false)}>
                     <Text>닫기</Text>
                 </TouchableOpacity>
             </View >
@@ -135,8 +137,60 @@ const styles = StyleSheet.create({
         borderBottomColor: '#000000',
         borderWidth: 1,
         fontSize: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
     },
     scroll: {
         height: 10
-    }
+    },
+    word: {
+        fontSize: 20,
+        backgroundColor: '#ece3ca',
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    wordBlank: {
+        fontSize: 20,
+        backgroundColor: '#ece3ca',
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    mean: {
+        fontSize: 20,
+        backgroundColor: '#FFF',
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    meanblank: {
+        fontSize: 20,
+        backgroundColor: '#FFF',
+        borderColor: 'gray',
+        borderWidth: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    index: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '10%'
+    },
+    button: {
+        backgroundColor: '#ef9995',
+        padding: 10,
+        borderRadius: 7,
+        margin: 5,
+        width: '70%',
+        alignItems: 'center',
+    },
 });
