@@ -1,19 +1,23 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ListRenderItem, ScrollView, TextInput } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal } from "react-native";
 import axiosInstance from '../axios';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function exam({ code, words, setExamOpen }: { code: any, words: any, setExamOpen: any }) {
+export default function exam({ code, words, setExamOpen, refresh, setRefresh, setRate, setNrate }: { code: any, words: any, setExamOpen: any, refresh: boolean, setRefresh: any, setRate:any, setNrate:any }) {
     interface ExamItem {
         word: string;
         mean: string;
         ans: string;
     }
-    const [index, setIndex] = useState(0);
-    const [score, setScore] = useState<ExamItem[]>([]);
+    interface ExamResult {
+        submit: string;
+        ans: string;
+        ox: string;
+    }
+    const [score, setScore] = useState<ExamResult[]>([]);
+    const [resultOpen, setResultOpen] = useState(false);
     const exam = useRef<ExamItem[]>([]);
-    const size = useRef(0);
 
     const reloadExam = () => {
         setScore([]);
@@ -30,7 +34,6 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
             return addWord;
         });
         exam.current = list;
-        size.current = exam.current.length;
     }
 
     useEffect(() => {
@@ -46,32 +49,39 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
     }
 
     const submit = async () => {
-        console.log(exam.current);
         await axios.post(
             'http://192.168.35.243:8000/main/test',
             // 'http://172.26.13.211:8000/main/test',
             { list: exam.current, code: code }
         ).then(response => {
             setScore(response.data.score);
-            console.log(response.data);
+            setRate(response.data.rate);
+            setNrate(response.data.rate);
+            setResultOpen(true);
         }).catch(error => {
             console.log(error);
         })
     }
 
-    const clickButton = (name: any) => {
-        if (name === "left" && index > 0) {
-            setIndex(id => id - 1)
-        } else if (name === "right" && index < size.current) {
-            setIndex(id => id + 1)
-        }
+    const reloadPage = async() => {
+        setRefresh(!refresh);
+        setExamOpen(false); 
+        setResultOpen(false); 
     }
+
+    // const clickButton = (name: any) => {
+    //     if (name === "left" && index > 0) {
+    //         setIndex(id => id - 1)
+    //     } else if (name === "right" && index < size.current) {
+    //         setIndex(id => id + 1)
+    //     }
+    // }
 
     return (
         <GestureHandlerRootView style={styles.modalBackground}>
             <View style={styles.modalContents}>
-                <Text style={{ color: '#515233', fontSize: 35, marginBottom: 20,}}>단어 테스트</Text>
-                <View style={styles.examRow}>
+                <Text style={{ color: '#515233', fontSize: 35, marginBottom: 20, }}>단어 테스트</Text>
+                <View style={styles.examHead}>
                     <Text style={{ width: '10%', justifyContent: 'center', textAlign: 'center' }}>No.</Text>
                     <Text style={{ width: '90%', justifyContent: 'center', textAlign: 'center' }}>Word / Mean</Text>
                 </View>
@@ -83,7 +93,7 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
                                     <Text style={{ fontSize: 20 }}>{index + 1}</Text>
                                 </View>
                                 <View style={{ width: '90%', justifyContent: 'center', alignItems: 'center', }}>
-                                    <TextInput style={styles.wordBlank} onChangeText={text => writeAnswer(index, 'word', text)} placeholder='단어'></TextInput>
+                                    <TextInput style={styles.wordBlank} onChangeText={text => writeAnswer(index, 'word', text)} placeholder='단어 입력'></TextInput>
                                     <Text style={styles.mean}>{it.mean}</Text>
                                 </View>
                             </View>
@@ -94,15 +104,48 @@ export default function exam({ code, words, setExamOpen }: { code: any, words: a
                                 </View>
                                 <View style={{ width: '90%', justifyContent: 'center', alignItems: 'center', }}>
                                     <Text style={styles.word}>{it.word}</Text>
-                                    <TextInput style={styles.meanblank} onChangeText={text => writeAnswer(index, 'word', text)} placeholder='의미'></TextInput>
+                                    <TextInput style={styles.meanblank} onChangeText={text => writeAnswer(index, 'mean', text)} placeholder='의미 입력'></TextInput>
                                 </View>
                             </View>
                         )
                     ))}
                 </ScrollView>
-                <TouchableOpacity style={styles.button} onPress={() => submit}>
+                <TouchableOpacity style={styles.button} onPress={() => submit()}>
                     <Text>제출하기</Text>
                 </TouchableOpacity>
+                <Modal visible={resultOpen}>
+                    <View style={styles.modalBackground}>
+                        <View style={styles.modalContents}>
+                            <Text style={{ color: '#515233', fontSize: 35, marginBottom: 20, }}>단어 테스트</Text>
+                            <View style={styles.examHead}>
+                                <Text style={{ width: '10%', justifyContent: 'center', textAlign: 'center' }}>No.</Text>
+                                <Text style={{ width: '80%', justifyContent: 'center', textAlign: 'center' }}>제출한 답 / 정답</Text>
+                                <Text style={{ width: '10%', justifyContent: 'center', textAlign: 'center' }}>O/X</Text>
+                            </View>
+                            <ScrollView style={styles.scroll}>
+                                {score.map((it, index) => (
+                                    <View key={index} style={styles.examRow}>
+                                        <View style={styles.index}>
+                                            <Text style={{ fontSize: 20 }}>{index + 1}</Text>
+                                        </View>
+                                        <View style={{ width: '80%', justifyContent: 'center', alignItems: 'center', }}>
+                                            <Text style={styles.result}>{it.submit}</Text>
+                                            <Text style={styles.result}>{it.ans.substring(1)}</Text>
+                                        </View>
+                                        <View style={styles.index}>
+                                            <Text style={{ fontSize: 20 }}>{it.ox}</Text>
+                                        </View>
+                                    </View>
+                                ))}
+                            </ScrollView>
+                            <TouchableOpacity style={styles.button} onPress={() => reloadPage()}>
+                                <Text>
+                                    확인
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <TouchableOpacity style={styles.button} onPress={() => setExamOpen(false)}>
                     <Text>닫기</Text>
                 </TouchableOpacity>
@@ -131,7 +174,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    examRow: {
+    examHead: {
         flexDirection: 'row',
         fontWeight: 'bold',
         borderBottomColor: '#000000',
@@ -140,45 +183,58 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
+        padding: 5,
+    },
+    examRow: {
+        flexDirection: 'row',
+        fontWeight: 'bold',
+        borderBottomColor: '#000000',
+        borderWidth: 1,
+        borderTopWidth: 0,
+        fontSize: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        padding: 5,
     },
     scroll: {
         height: 10
     },
     word: {
         fontSize: 20,
-        backgroundColor: '#ece3ca',
-        borderColor: 'gray',
-        borderWidth: 1,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: 'center',
+        marginBottom: 5,
     },
     wordBlank: {
-        fontSize: 20,
-        backgroundColor: '#ece3ca',
+        height: 40,
         borderColor: 'gray',
         borderWidth: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginBottom: 5,
+        marginTop: 5,
+        width: 300,
+        paddingHorizontal: 8,
+        borderRadius: 5,
+        backgroundColor: '#fff'
     },
     mean: {
         fontSize: 20,
-        backgroundColor: '#FFF',
-        borderColor: 'gray',
-        borderWidth: 1,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: 'center'
     },
     meanblank: {
-        fontSize: 20,
-        backgroundColor: '#FFF',
+        height: 40,
         borderColor: 'gray',
         borderWidth: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginBottom: 5,
+        width: 300,
+        paddingHorizontal: 8,
+        borderRadius: 5,
+        backgroundColor: '#fff'
     },
     index: {
         justifyContent: 'center',
@@ -192,5 +248,12 @@ const styles = StyleSheet.create({
         margin: 5,
         width: '70%',
         alignItems: 'center',
+    },
+    result: {
+        fontSize: 20,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
     },
 });

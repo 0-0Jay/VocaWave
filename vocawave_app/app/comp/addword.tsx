@@ -15,6 +15,11 @@ export default function addword({ code, setAddOpen, refresh, setRefresh }: { cod
         ).then(response => {
             alert("추가되었습니다!");
             setRefresh(!refresh);
+            setWord(word => ({
+                ...word,
+                ['word']: '',
+                ['mean']: ''
+            }));
         })
     }
 
@@ -52,8 +57,8 @@ export default function addword({ code, setAddOpen, refresh, setRefresh }: { cod
         <GestureHandlerRootView style={styles.modalBackground}>
             <View style={styles.modalContents}>
                 <Text style={styles.title}>단어 추가</Text>
-                <TextInput style={styles.input} placeholder="단어 입력" onChangeText={text => { inputWord('word', text) }} />
-                <TextInput style={styles.input} placeholder="의미 입력" onChangeText={text => { inputWord('mean', text) }} />
+                <TextInput style={styles.input} placeholder="단어 입력" onChangeText={text => { inputWord('word', text) }} value={word.word}/>
+                <TextInput style={styles.input} placeholder="의미 입력" onChangeText={text => { inputWord('mean', text) }} value={word.mean}/>
                 <TouchableOpacity style={styles.button} onPress={() => editWord()}>
                     <Text style={styles.buttonText}>추가하기</Text>
                 </TouchableOpacity>

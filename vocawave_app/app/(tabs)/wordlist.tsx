@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/native'
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { Image, Modal, StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Header from '../comp/header';
 import WordItem from '../comp/worditem';
@@ -16,6 +16,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
       cmt: string,
       cnt: number,
       rate: number,
+      setRate: any,
     }
   }
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
   const { params } = useRoute<RouteProp<paramlist, 'contentType'>>();
   const [words, setWords] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [nrate, setNrate] = useState(params.rate);
 
   const list = async () => {
     await axiosInstance.get(
@@ -95,7 +97,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
           <Text style={{fontSize: 25, fontWeight: 'bold'}}>{params.wtitle}</Text>
           <Text style={{fontSize: 15, color: 'gray'}}>{params.cmt}</Text>
         </View>
-        <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 'auto', padding: 15, }}>학습률 : {params.rate} %</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 'auto', padding: 15, }}>학습률 : {nrate} %</Text>
       </View>
       <View style={styles.container}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -132,7 +134,7 @@ export default function Wordlist({ navigation }: { navigation: any }) {
         </TouchableOpacity>
       </View>
       <Modal visible={examOpen} style={styles.container} transparent={true}>
-        <Exam code={params.code} words={words} setExamOpen={setExamOpen}/>
+        <Exam code={params.code} words={words} setExamOpen={setExamOpen} refresh={refresh} setRefresh={setRefresh} setRate={params.setRate} setNrate={setNrate}/>
       </Modal>
       <Modal visible={addOpen} style={styles.container} transparent={true}>
         <AddWord code={params.code} setAddOpen={setAddOpen} refresh={refresh} setRefresh={setRefresh}/>

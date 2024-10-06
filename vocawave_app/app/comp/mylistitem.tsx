@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 export default function MyListItem({ navigation, item }: { navigation: any, item: any}) {
-    const wordlist = () => navigation.navigate('Wordlist', item);
+    const [rate, setRate] = useState(item.rate);
+    const it = {...item, rate : rate, setRate : setRate};
+    const wordlist = () => navigation.navigate('Wordlist', it);
 
     return (
         <TouchableOpacity onPress={wordlist}>
@@ -12,7 +15,7 @@ export default function MyListItem({ navigation, item }: { navigation: any, item
                     <Text style={styles.cnt}>단어수 : {item.cnt} 개</Text>
                     <Text style={styles.cmt} numberOfLines={1}>{item.cmt}</Text>
                 </View>
-                <Text style={styles.rate}>학습률{'\n'}{item.rate} %</Text>
+                <Text style={styles.rate}>학습률{'\n'}{rate} %</Text>
             </View>
         </TouchableOpacity>
     )
