@@ -5,8 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 #127.0.0.1:8000/main/
-#192.168.35.57:8000/main/
-
+#192.168.35.243:8000/main/
 app = FastAPI()
 origins = ["*"]
 # CORS 설정 추가
@@ -36,7 +35,9 @@ async def test(request: Request) -> dict:
 # 실행방법
 # 1. cmd를 켜고 main.py가 있는 폴더로 cd를 통해 이동
 # 2. uvicorn main:app --reload 명령어 실행
+# 2-1. --reload 옵션은 실시간 반영 느낌이라 ctrl + C로 프로그램 종료가 안됨. 안쓰는거 추천
 
 # 테스트용 코드
-# if __name__ == '__main__':
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
+if __name__ == '__main__':
+    uvicorn.run(app, host="192.168.35.243", port=8000)
+    # uvicorn.run(app, host="172.26.13.211", port=8000)
