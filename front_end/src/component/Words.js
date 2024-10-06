@@ -132,7 +132,7 @@ function Words() {
                         <dialog id="wordtest" className="modal bg-base-100" ><Wordtest code={wcode} wordlist={wordlist} setRate={setRate}/></dialog>
                         <button className="btn btn-primary w-64 m-2" onClick={() => document.getElementById('addword').showModal()}>단어 추가</button><br />
                         <dialog id="addword" className="modal"><AddWord setWordlist={setWordlist} code={wcode} /></dialog>
-                        <button className="btn btn-primary w-64 m-2" onClick={shareList}>단어장 공유</button>
+                        <button className="btn btn-primary w-64 m-2" onClick={shareList}>단어장 공유</button><br />
                         <button className="btn btn-primary w-64 m-2" onClick={deleteList}>단어장 삭제</button>
                         <button className="btn btn-primary w-64 m-2" onClick={() => { navigate("/mywordlist") }}>목록으로</button>
                     </div>

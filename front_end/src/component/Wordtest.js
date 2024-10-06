@@ -35,7 +35,7 @@ function Wordtest({ code, wordlist, setRate }) {
     const submit = async () => {
         console.log(test);
         await axios.post(
-            'http://localhost:8000/main/test',
+            'http://192.168.35.243:8000/main/test',
             { list: test.current, code: code }
         ).then(response => {
             setScore(response.data.score);
@@ -90,7 +90,7 @@ function Wordtest({ code, wordlist, setRate }) {
                                 <tr key={index}>
                                     <th className="w-10">{index + 1}</th>
                                     <td className="w-20">{it.submit}</td>
-                                    <td className="w-20">{it.ans}</td>
+                                    <td className="w-20">{it.ans.substring(1)}</td>
                                     <td className="w-10">{it.ox}</td>
                                 </tr>
                             ))}
