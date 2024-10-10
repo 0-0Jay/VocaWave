@@ -40,8 +40,8 @@ function ShareItemList({wtitle, code, cnt, cmt, nick}) {
                 <div className="card-body" style={{width:'350px'}}>
                     <h2 className="card-title">{wtitle}</h2>
                     <p>제작자 : {nick}</p>
-                    <h3 className="text-xs m-1 text-slate-500">{cnt}</h3>
-                    <p style={{ textAlign: 'left', overflow: 'hidden', wordWrap: 'break-word', whiteSpace: 'normal' }}>{cmt}</p>
+                    <h3 className="text-xs m-1 text-slate-500">단어 수 : {cnt}</h3>
+                    <p style={{ textAlign: 'left', overflow: 'hidden', wordWrap: 'break-word', whiteSpace: 'normal' }}>설명 : {cmt}</p>
                     <div className="items-center text-center m-10">
                         <p className="font-bold m-3">공유 코드</p>
                         <input type="text" value={code} className="input input-bordered text-slate-500 text-center bg-base-300 w-48" readOnly />

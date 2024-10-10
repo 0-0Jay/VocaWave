@@ -35,7 +35,8 @@ function Wordtest({ code, wordlist, setRate }) {
     const submit = async () => {
         console.log(test);
         await axios.post(
-            'http://192.168.35.243:8000/main/test',
+            // 'http://192.168.35.243:8000/main/test',
+            'http://172.26.13.211:8000/main/test',
             { list: test.current, code: code }
         ).then(response => {
             setScore(response.data.score);
