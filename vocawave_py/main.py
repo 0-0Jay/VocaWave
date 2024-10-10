@@ -39,5 +39,5 @@ async def test(request: Request) -> dict:
 
 # 테스트용 코드
 if __name__ == '__main__':
-    uvicorn.run(app, host="192.168.35.243", port=8000)
-    # uvicorn.run(app, host="172.26.13.211", port=8000)
+    # uvicorn.run(app, host="192.168.35.243", port=8000)
+    uvicorn.run(app, host="172.26.13.211", port=8000)
