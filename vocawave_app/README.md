@@ -1,8 +1,8 @@
 ## Get started
 
-1. Install dependencies
+1. Install dependencies<br>
    npm install
-   
-3. Start the app
+   <br>
+3. Start the app<br>
    npm start
 
