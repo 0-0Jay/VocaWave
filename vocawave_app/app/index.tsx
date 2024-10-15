@@ -15,7 +15,7 @@ const checkLogin = async () => {
 export default function Index() {
   return (
     // <Stack.Navigator initialRouteName={(checkLogin)? "Home":"Main"} >
-    <Stack.Navigator initialRouteName={"Main"} >
+    <Stack.Navigator initialRouteName={"Main"} screenOptions={{headerShown : false}} >
       <Stack.Screen name="Main" component={Main} />
       <Stack.Screen name="Home" component={Home} options={{animation : 'none'}} />
       <Stack.Screen name="Share" component={Share} options={{animation : 'none'}} />
