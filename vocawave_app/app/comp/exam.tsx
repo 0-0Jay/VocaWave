@@ -50,8 +50,8 @@ export default function exam({ code, words, setExamOpen, refresh, setRefresh, se
 
     const submit = async () => {
         await axios.post(
-            // 'http://192.168.35.243:8000/main/test',
-            'http://172.26.13.211:8000/main/test',
+            // 'http://로컬호스트 포트 입력/main/test',
+            'http://로컬호스트 포트 입력/main/test',
             { list: exam.current, code: code }
         ).then(response => {
             setScore(response.data.score);
